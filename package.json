@@ -11,13 +11,13 @@
     "pack": "electron-builder --dir",
     "dist": "npm run prod && electron-builder",
     "test": "jest",
-    "test:ci": "jest --coverage",
+    "test:ci": "yarn lint && jest --coverage",
     "postinstall": "electron-builder install-app-deps"
   },
   "author": "anXieTyPB",
-  "license": "GPLv3",
+  "license": "MIT",
   "build": {
-    "productName": "electron-react",
+    "productName": "W3GCheck",
     "win": {
       "target": "NSIS"
     },
