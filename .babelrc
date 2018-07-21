@@ -1,0 +1,23 @@
+{
+  "presets": [
+    "react",
+    "env"
+  ],
+  "env": {
+    "production": {
+      "presets": ["react-optimize"],
+      "plugins": [
+        "transform-class-properties",
+        "transform-es2015-classes",
+        "transform-object-rest-spread"
+      ]      
+    },
+    "development": {
+      "plugins": [
+        "transform-class-properties",
+        "transform-es2015-classes",
+        "transform-object-rest-spread"
+      ]
+    }
+  }
+}
