@@ -18,5 +18,6 @@ Please use the issue tracker to create a bug report.
 PRs are welcome. Fork this repo, make your changes and create a pull request. Please provide tests.
 
 ## License
+Based off of the [electron-react](https://github.com/tahnik/electron-react/) starter repository by Tahnik Mustasin.
 
-MIT License, see LICENSE.md
+MIT License, see LICENSE file.
