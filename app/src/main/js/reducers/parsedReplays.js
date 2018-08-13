@@ -1,4 +1,4 @@
-import { PARSE_REPLAY_ASYNC_DONE } from '../actions/replaylist';
+import { PARSE_REPLAY_ASYNC_DONE } from '../actions/parseReplay';
 import { LOAD_REPLAYS_DONE } from '../actions/loadReplays';
 
 export default function parsed(state = {}, action) {

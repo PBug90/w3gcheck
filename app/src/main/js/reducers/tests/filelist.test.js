@@ -1,6 +1,6 @@
 /* global describe it expect */
-import reducer from './fileList';
-import { UPDATE_FILE_LIST } from '../actions/replaylist';
+import reducer from '../fileList';
+import { UPDATE_FILE_LIST } from '../../actions/replaylist';
 
 describe('fileList reducer', () => {
   it('should return the initial state', () => {

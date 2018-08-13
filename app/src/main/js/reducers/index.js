@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form';
 import fileList from './fileList';
 import selected from './selectReplay';
 import parsed from './parsedReplays';
@@ -9,6 +10,7 @@ import pagination from './pagination';
 
 const rootReducer = combineReducers({
   fileList,
+  form: formReducer,
   selected,
   parsed,
   parsestatus,

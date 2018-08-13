@@ -58,11 +58,17 @@ export default connect(null, mapDispatchToProps)(withStyles(styles)((props) => {
       </Typography>
       <Divider />
       <List>
+        <ListItem button onClick={() => props.push('/replays/add')}>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Add replays" />
+        </ListItem>
         <ListItem button onClick={() => props.push('/replays')}>
           <ListItemIcon>
             <DraftsIcon />
           </ListItemIcon>
-          <ListItemText primary="Replays" />
+          <ListItemText primary="Collection" />
         </ListItem>
         <ListItem button onClick={() => props.push('/settings')}>
           <ListItemIcon>

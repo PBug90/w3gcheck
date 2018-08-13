@@ -1,6 +1,6 @@
 /* global describe it expect */
-import reducer from './replays';
-import { LOAD_REPLAYS_DONE } from '../actions/loadReplays';
+import reducer from '../replays';
+import { LOAD_REPLAYS_DONE } from '../../actions/loadReplays';
 
 describe('replays reducer', () => {
   it('should return the initial state', () => {

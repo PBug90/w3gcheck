@@ -9,8 +9,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ReplayTableRow from './ReplayTableRow';
 
-const { dialog } = require('electron').remote;
-
 const styles = theme => ({
   root: theme.mixins.gutters({
     paddingTop: 16,
@@ -25,7 +23,6 @@ const styles = theme => ({
 class ReplayTable extends React.Component {
   constructor(props) {
     super(props);
-    this.showDialog = this.showDialog.bind(this);
     this.refresh = this.refresh.bind(this);
     this.previousPage = this.previousPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
@@ -35,10 +32,6 @@ class ReplayTable extends React.Component {
     this.refresh();
   }
 
-  showDialog() {
-    const result = dialog.showOpenDialog({ properties: ['multiSelections'] });
-    if (result) { this.props.parseFiles(result); }
-  }
 
   refresh() {
     this.props.loadReplays(1, 25);
@@ -57,13 +50,10 @@ class ReplayTable extends React.Component {
 
   render() {
     const {
-      replayList, replays, classes, selectReplay, parsestatus, pagination,
+      replayList, replays, classes, selectReplay, pagination,
     } = this.props;
     return (
       <div>
-        <Button variant="outlined" className={classes.button} onClick={this.showDialog}>
-          Add replays
-        </Button>
         <Button variant="outlined" className={classes.button} onClick={this.refresh}>
           Refresh
         </Button>
@@ -73,7 +63,6 @@ class ReplayTable extends React.Component {
         <Button disabled={pagination.currentPage === pagination.totalPages} variant="outlined" className={classes.button} onClick={this.nextPage}>
           next Page
         </Button>
-        <span>currently parsing: {parsestatus.parsing}, parsing errors: {parsestatus.errors}</span>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -101,8 +90,6 @@ ReplayTable.propTypes = {
   replayList: PropTypes.array,
   replays: PropTypes.object,
   classes: PropTypes.object,
-  parsestatus: PropTypes.object,
-  parseFiles: PropTypes.func,
   selectReplay: PropTypes.func,
   loadReplays: PropTypes.func,
   pagination: PropTypes.object,

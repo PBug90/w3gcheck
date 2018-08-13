@@ -20,7 +20,9 @@ const styles = theme => ({
 });
 
 
-const ReplayMeta = ({ classes, meta, observers = [] }) => (
+const ReplayMeta = ({
+  classes, meta, observers = [], filepath, matchup,
+}) => (
   <Paper className={classes.root}>
     <Table>
       <TableBody>
@@ -56,6 +58,14 @@ const ReplayMeta = ({ classes, meta, observers = [] }) => (
         <TableRow >
           <TableCell scope="row">Observers</TableCell>
           <TableCell >{observers.join(', ') || '-'}</TableCell>
+        </TableRow>
+        <TableRow >
+          <TableCell scope="row">Filepath</TableCell>
+          <TableCell >{filepath}</TableCell>
+        </TableRow>
+        <TableRow >
+          <TableCell scope="row">Matchup</TableCell>
+          <TableCell >{matchup}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

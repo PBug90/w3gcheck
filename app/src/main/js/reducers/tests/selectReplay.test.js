@@ -1,6 +1,6 @@
 /* global describe it expect */
-import reducer from './selectReplay';
-import { SELECT_REPLAY } from '../actions/replaylist';
+import reducer from '../selectReplay';
+import { SELECT_REPLAY } from '../../actions/replaylist';
 
 describe('selectReplay reducer', () => {
   it('should return the initial state', () => {

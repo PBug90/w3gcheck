@@ -1,4 +1,9 @@
-import { PARSE_REPLAY_ASYNC_DONE, PARSE_REPLAY_ASYNC_ERROR, PARSE_REPLAY_ASYNC_PENDING } from '../actions/replaylist';
+import {
+  PARSE_REPLAY_ASYNC_DONE,
+  PARSE_REPLAY_ASYNC_ERROR,
+  PARSE_REPLAY_ASYNC_PENDING,
+}
+  from '../actions/parseReplay';
 
 export default function parsed(state = { parsing: 0, errors: 0 }, action) {
   switch (action.type) {

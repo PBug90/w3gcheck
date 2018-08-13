@@ -68,6 +68,8 @@ class Replay extends React.Component {
           <ReplayMeta
             meta={Object.assign({}, replay.meta, replay.header)}
             observers={replay.observers}
+            filepath={replay.filepath}
+            matchup={replay.matchup}
           />
         </Grid>
         <Grid item="item" xs={12} className={classes.tabs}>

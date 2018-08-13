@@ -12,11 +12,13 @@ const doWork = filepath => new Promise((resolve, reject) => {
   current += 1;
   currentWork[current] = { resolve, reject };
   child.send({ current, filepath });
-  console.log(currentWork);
+  console.log(current, currentWork);
 });
 
-child.on('message', ({ current2, parsed }) => {
+child.on('message', ({ current: current2, parsed }) => {
+  console.log(current2, parsed);
   if (currentWork[current2]) {
+    console.log('resolving');
     currentWork[current2].resolve(parsed);
   }
 });

@@ -10,6 +10,7 @@ import ReplayPage from './containers/ReplayPage';
 import Drawer from './components/Drawer';
 import SettingsPage from './components/SettingsPage';
 import ReplayCollectionPage from './containers/ReplayCollectionPage';
+import AddReplaysPage from './containers/AddReplaysPage';
 
 const styles = theme => ({
   root: {
@@ -39,6 +40,7 @@ const App = ({ classes }) => (
       <Route exact path="/" component={HomeView} />
       <Route exact path="/replay" component={ReplayPage} />
       <Route exact path="/replays" component={ReplayCollectionPage} />
+      <Route exact path="/replays/add" component={AddReplaysPage} />
       <Route exact path="/settings" component={SettingsPage} />
     </main>
   </div>

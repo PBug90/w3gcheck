@@ -1,6 +1,11 @@
 /* global describe it expect */
-import reducer from './parsestatus';
-import { PARSE_REPLAY_ASYNC_DONE, PARSE_REPLAY_ASYNC_PENDING, PARSE_REPLAY_ASYNC_ERROR } from '../actions/replaylist';
+import reducer from '../parsestatus';
+import {
+  PARSE_REPLAY_ASYNC_DONE,
+  PARSE_REPLAY_ASYNC_PENDING,
+  PARSE_REPLAY_ASYNC_ERROR,
+}
+  from '../../actions/parseReplay';
 
 describe('parsestatus reducer', () => {
   it('should return the initial state', () => {
@@ -9,7 +14,6 @@ describe('parsestatus reducer', () => {
 
   it('should handle PARSE_REPLAY_ASYNC_DONE', () => {
     const replay = { md5: 'hash1', one: 1 };
-
     expect(
       reducer({ parsing: 3, errors: 0 }, {
         type: PARSE_REPLAY_ASYNC_DONE,

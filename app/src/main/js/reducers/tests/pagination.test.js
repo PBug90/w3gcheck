@@ -1,6 +1,6 @@
 /* global describe it expect */
-import reducer from './pagination';
-import { LOAD_REPLAYS_DONE } from '../actions/loadReplays';
+import reducer from '../pagination';
+import { LOAD_REPLAYS_DONE } from '../../actions/loadReplays';
 
 describe('pagination reducer', () => {
   it('should return the initial state', () => {
