@@ -32,19 +32,21 @@ const styles = theme => ({
   },
 });
 
-const App = ({ classes }) => (
-  <div className={classes.root}>
-    <CssBaseline />
-    <Drawer />
-    <main className={classes.content}>
-      <Route exact path="/" component={HomeView} />
-      <Route exact path="/replay" component={ReplayPage} />
-      <Route exact path="/replays" component={ReplayCollectionPage} />
-      <Route exact path="/replays/add" component={AddReplaysPage} />
-      <Route exact path="/settings" component={SettingsPage} />
-    </main>
-  </div>
-);
+const App = (props) => {
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <Drawer />
+      <main className={classes.content}>
+        <Route exact path="/" component={HomeView} />
+        <Route exact path="/replay" component={ReplayPage} />
+        <Route exact path="/replays" component={ReplayCollectionPage} />
+        <Route exact path="/replays/add" component={AddReplaysPage} />
+        <Route exact path="/settings" component={SettingsPage} />
+      </main>
+    </div>);
+};
 
 App.propTypes = {
   classes: PropTypes.object,

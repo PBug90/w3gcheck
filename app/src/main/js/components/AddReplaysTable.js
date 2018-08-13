@@ -24,7 +24,7 @@ const styles = theme => ({
 });
 
 
-class ReplayTable extends React.Component { //eslint-disable-line
+class AddReplaysTable extends React.Component { //eslint-disable-line
   render() {
     const {
       parsed, files, classes, dispatch,
@@ -43,6 +43,7 @@ class ReplayTable extends React.Component { //eslint-disable-line
           <TableBody >
             {files.map((f, index) =>
               (<ParsedFileTableRow
+                key={f.path}
                 dispatch={dispatch}
                 fileInfo={f}
                 replay={parsed[f.md5]}
@@ -59,11 +60,11 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-ReplayTable.propTypes = {
+AddReplaysTable.propTypes = {
   classes: PropTypes.object,
   parsed: PropTypes.object,
   files: PropTypes.array,
   dispatch: PropTypes.func,
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(ReplayTable));
+export default connect(null, mapDispatchToProps)(withStyles(styles)(AddReplaysTable));

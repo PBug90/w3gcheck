@@ -37,7 +37,7 @@ const ParsedFileTableRow = (props) => {
       <TableCell>
 
         <Button
-          disabled={fileInfo.fromDB === true}
+          disabled={fileInfo.fromDB === true || !replay}
           onClick={() => dispatch(saveReplay({ ...replay, ...fileInfo }, index))}
         >
           Add to Collection
