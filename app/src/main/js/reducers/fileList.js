@@ -10,17 +10,18 @@ export default function fileList(state = [], action) {
       return action.payload.map(l => ({
         base: path.basename(l), path: l, pending: false, finished: false,
       }));
+
     case PARSE_REPLAY_ASYNC_DONE:
       newState = state.slice(0);
-
       newState[action.payload.index].md5 = action.payload.md5;
       newState[action.payload.index].fromDB = action.payload.fromDB;
       return newState;
+
     case SAVE_REPLAY_ASYNC_DONE:
       newState = state.slice(0);
-      console.log(action, newState);
       newState[action.payload.fileIndex].fromDB = true;
       return newState;
+
     default:
       return state;
   }

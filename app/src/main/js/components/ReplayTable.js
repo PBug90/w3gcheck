@@ -67,6 +67,7 @@ class ReplayTable extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell>Players</TableCell>
+              <TableCell>Matchup</TableCell>
               <TableCell>Map</TableCell>
               <TableCell>Duration</TableCell>
               <TableCell />

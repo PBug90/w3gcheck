@@ -74,7 +74,7 @@ class Replay extends React.Component {
         </Grid>
         <Grid item="item" xs={12} className={classes.tabs}>
           <ReplayTabs
-            labels={['one', 'two']}
+            labels={['Absolute Actions', 'APM']}
             tabContents={[actionChart, apmChart]}
           />
         </Grid>

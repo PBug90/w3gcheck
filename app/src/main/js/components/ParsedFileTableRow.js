@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import { saveReplay } from '../actions/saveReplay';
 import { selectReplay } from '../actions/replaylist';
-
+import RaceColoredPlayerName from './RaceColoredPlayerName';
 
 const ParsedFileTableRow = (props) => {
   const {
@@ -16,7 +16,11 @@ const ParsedFileTableRow = (props) => {
   let players = null;
   if (replay) {
     players = Object.values(replay.players).map(
-      player => <div key={player.id} >{player.name}</div>,
+      player =>
+        (<RaceColoredPlayerName
+          name={player.name}
+          race={player.detectedRace || player.race || 0}
+        />),
     );
   }
   return (

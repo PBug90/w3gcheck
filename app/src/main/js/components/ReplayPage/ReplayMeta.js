@@ -77,6 +77,8 @@ ReplayMeta.propTypes = {
   meta: PropTypes.object,
   classes: PropTypes.object,
   observers: PropTypes.array,
+  filepath: PropTypes.string,
+  matchup: PropTypes.string,
 };
 
 export default withStyles(styles)(ReplayMeta);

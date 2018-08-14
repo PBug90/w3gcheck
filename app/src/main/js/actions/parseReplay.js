@@ -35,7 +35,7 @@ export function parseReplay(item, index) {
           });
         });
       }).catch((err) => {
-        dispatch({ type: PARSE_REPLAY_ASYNC_ERROR, payload: err });
+        dispatch({ type: PARSE_REPLAY_ASYNC_ERROR, payload: err.message });
       });
   };
 }
