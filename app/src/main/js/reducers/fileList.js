@@ -29,7 +29,7 @@ export default function fileList(state = [], action) {
 
     case PARSE_REPLAY_ASYNC_ERROR:
       newState = state.slice(0);
-      newState[action.payload].pending = false;
+      newState[action.payload.fileIndex].pending = false;
       return newState;
 
     case SAVE_REPLAY_ASYNC_DONE:

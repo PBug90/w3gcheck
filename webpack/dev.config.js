@@ -18,6 +18,7 @@ module.exports = {
     fs: "require('fs')",
     path: "require('path')",
     'electron-remote': "require('electron-remote')",
+    leveldown: "require('leveldown')",
   },
   target: 'electron-renderer',
   entry: {

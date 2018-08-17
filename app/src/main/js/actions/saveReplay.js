@@ -21,6 +21,6 @@ export function saveReplay(replay, fileIndex) {
           fileIndex,
         },
       }))
-      .catch(err => dispatch({ type: SAVE_REPLAY_ASYNC_ERROR, payload: err }));
+      .catch(err => dispatch({ type: SAVE_REPLAY_ASYNC_ERROR, payload: { fileIndex, err } }));
   };
 }

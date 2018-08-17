@@ -98,7 +98,7 @@ describe('fileList reducer', () => {
     expect(
       reducer(baseState, {
         type: PARSE_REPLAY_ASYNC_ERROR,
-        payload: 0,
+        payload: { fileIndex: 0, err: new Error('an error!') },
       }),
     ).toEqual([
       {

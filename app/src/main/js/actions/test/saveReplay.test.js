@@ -46,7 +46,7 @@ describe('saveReplay action test', () => {
       },
       {
         type: SAVE_REPLAY_ASYNC_ERROR,
-        payload: new Error('A database error occured!'),
+        payload: { err: new Error('A database error occured!'), fileIndex: 0 },
       },
     ];
     database.insertReplay.mockRejectedValue(new Error('A database error occured!'));
