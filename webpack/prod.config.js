@@ -23,6 +23,7 @@ module.exports = {
     fs: "require('fs')",
     path: "require('path')",
     zlib: "require('zlib')",
+    leveldown: "require('leveldown')",
   },
   mode: 'production',
   output: {
