@@ -14,7 +14,18 @@ import {
   PARSE_REPLAY_ASYNC_DONE,
   PARSE_REPLAY_ASYNC_ERROR,
 } from './parseReplay';
-import { loadReplays, LOAD_REPLAYS_PENDING, LOAD_REPLAYS_DONE, LOAD_REPLAYS_ERROR } from './loadReplays';
+import {
+  loadReplays,
+  LOAD_REPLAYS_PENDING,
+  LOAD_REPLAYS_DONE,
+  LOAD_REPLAYS_ERROR,
+} from './loadReplays';
+import {
+  saveSettings,
+  loadSettings,
+  SAVE_SETTINGS,
+  LOAD_SETTINGS,
+} from './settings';
 import database from '../database';
 
 
@@ -185,5 +196,44 @@ describe('parseFiles action test', () => {
         expect(actualActions).toEqual(expectedActions);
         done();
       });
+  });
+});
+
+
+describe('saveSettings action test', () => {
+  it('dispatches SAVE_SETTINGS with given payload', () => {
+    const store = mockStore({ settings: {} });
+    const expectedActions = [
+      {
+        type: SAVE_SETTINGS,
+        payload: { somesetting: 123, someOtherSetting: '/a/path/' },
+      },
+    ];
+
+    store.dispatch(saveSettings({ somesetting: 123, someOtherSetting: '/a/path/' }));
+
+    const actualActions = store.getActions();
+    expect(actualActions).toEqual(expectedActions);
+  });
+});
+
+
+const fs = require('fs');
+
+describe('loadSettings action test', () => {
+  it('dispatches LOAD_SETTINGS with given payload', () => {
+    fs.readFileSync = jest.fn().mockReturnValue('{"somesetting": 123, "someOtherSetting": "/a/path/" }');
+    const store = mockStore({ settings: {} });
+    const expectedActions = [
+      {
+        type: LOAD_SETTINGS,
+        payload: { somesetting: 123, someOtherSetting: '/a/path/' },
+      },
+    ];
+
+    store.dispatch(loadSettings());
+
+    const actualActions = store.getActions();
+    expect(actualActions).toEqual(expectedActions);
   });
 });
