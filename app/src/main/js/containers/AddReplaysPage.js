@@ -22,7 +22,7 @@ class AddReplaysPage extends React.Component {
     const { parsed, fileList, parsestatus } = this.props;
     return (
       <div>
-        <Button onClick={this.showDialog}>Parse Replays</Button>
+        <Button variant="outlined" onClick={this.showDialog}>Parse Replays</Button>
         <span>currently parsing: {parsestatus.parsing}, parsing errors: {parsestatus.errors}</span>
         <AddReplaysTable files={fileList} parsed={parsed} />
       </div>

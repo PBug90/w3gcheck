@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+// import 'typeface-roboto';
 
 import HomeView from './containers/HomePage';
 import ReplayPage from './containers/ReplayPage';
@@ -11,6 +12,7 @@ import Drawer from './components/Drawer';
 import SettingsPage from './components/SettingsPage';
 import ReplayCollectionPage from './containers/ReplayCollectionPage';
 import AddReplaysPage from './containers/AddReplaysPage';
+
 
 const styles = theme => ({
   root: {

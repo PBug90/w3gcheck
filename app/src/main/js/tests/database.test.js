@@ -19,11 +19,23 @@ describe('Database tests', () => {
     removeAllDocs().then(() =>
       Promise.all(
         [
-          db.put({ replay: 1, _id: 'replay1', matchup: 'HvO' }),
-          db.put({ replay: 2, _id: 'replay2', matchup: 'HvU' }),
-          db.put({ replay: 3, _id: 'replay3', matchup: 'HvO' }),
+          db.put({
+            replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: new Date('2018-08-17T18:00:00.000Z'), md5: 'replay1',
+          }),
+          db.put({
+            replay: 2, _id: 'replay2', matchup: 'HvU', insertDate: new Date('2018-08-17T18:01:00.000Z'), md5: 'replay2',
+          }),
+          db.put({
+            replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: new Date('2018-08-17T18:02:00.000Z'), md5: 'replay3',
+          }),
         ],
-      ).then(() => done()));
+      )
+        .then(() => db.createIndex({
+          index: {
+            fields: ['insertDate', 'md5', 'matchup'],
+          },
+        }))
+        .then(() => done()));
   });
   describe('getReplayCount()', () => {
     it('returns the number of replays in database', (done) => {
@@ -44,11 +56,20 @@ describe('Database tests', () => {
   });
 
   describe('getReplays()', () => {
-    it('returns all replays that exist in database', (done) => {
+    it('returns all replays that exist in database ordered by insertDate descending', (done) => {
       getReplays(1, 10).then((r) => {
-        expect(r).toEqual([{ replay: 1, _id: 'replay1', matchup: 'HvO' },
-          { replay: 2, _id: 'replay2', matchup: 'HvU' },
-          { replay: 3, _id: 'replay3', matchup: 'HvO' }]);
+        expect(r).toEqual([
+          {
+            replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: '2018-08-17T18:02:00.000Z', md5: 'replay3',
+          },
+          {
+            replay: 2, _id: 'replay2', matchup: 'HvU', insertDate: '2018-08-17T18:01:00.000Z', md5: 'replay2',
+          },
+          {
+            replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: '2018-08-17T18:00:00.000Z', md5: 'replay1',
+          },
+
+        ]);
         done();
       });
     });
@@ -56,11 +77,18 @@ describe('Database tests', () => {
     it('takes perPage and page into account', (done) => {
       Promise.all([
         getReplays(1, 2).then((r) => {
-          expect(r).toEqual([{ replay: 1, _id: 'replay1', matchup: 'HvO' },
-            { replay: 2, _id: 'replay2', matchup: 'HvU' }]);
+          expect(r).toEqual([
+            {
+              replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: '2018-08-17T18:02:00.000Z', md5: 'replay3',
+            },
+            {
+              replay: 2, _id: 'replay2', matchup: 'HvU', insertDate: '2018-08-17T18:01:00.000Z', md5: 'replay2',
+            }]);
         }),
         getReplays(2, 2).then((r) => {
-          expect(r).toEqual([{ replay: 3, _id: 'replay3', matchup: 'HvO' }]);
+          expect(r).toEqual([{
+            replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: '2018-08-17T18:00:00.000Z', md5: 'replay1',
+          }]);
         })])
         .then(() => done());
     });
@@ -69,8 +97,12 @@ describe('Database tests', () => {
       getReplays(1, 10, { matchup: 'HvO' }).then((r) => {
         expect(r).toEqual(
           [
-            { replay: 1, _id: 'replay1', matchup: 'HvO' },
-            { replay: 3, _id: 'replay3', matchup: 'HvO' },
+            {
+              replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: '2018-08-17T18:02:00.000Z', md5: 'replay3',
+            },
+            {
+              replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: '2018-08-17T18:00:00.000Z', md5: 'replay1',
+            },
           ],
         );
         done();
@@ -81,7 +113,9 @@ describe('Database tests', () => {
   describe('getReplay()', () => {
     it('returns a specific replay by its ID', (done) => {
       getReplay('replay1').then((r) => {
-        expect(r).toEqual({ replay: 1, _id: 'replay1', matchup: 'HvO' });
+        expect(r).toEqual({
+          replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: '2018-08-17T18:00:00.000Z', md5: 'replay1',
+        });
         done();
       });
     });
@@ -89,11 +123,13 @@ describe('Database tests', () => {
 
   describe('insertReplay()', () => {
     it('inserts a replay successfully using its md5 as id', (done) => {
-      insertReplay({ md5: 'somemd5', prop1: 'someproperty', matchup: 'HHvOO' }).then((r) => {
+      insertReplay({
+        md5: 'somemd5', prop1: 'someproperty', matchup: 'HHvOO', insertDate: new Date('2018-08-17T18:00:00.000Z'),
+      }).then((r) => {
         expect(r.ok).toBe(true);
         db.get('somemd5').then((result) => {
           expect(result).toEqual(expect.objectContaining({
-            _id: 'somemd5', md5: 'somemd5', prop1: 'someproperty', matchup: 'HHvOO',
+            _id: 'somemd5', md5: 'somemd5', prop1: 'someproperty', matchup: 'HHvOO', insertDate: '2018-08-17T18:00:00.000Z',
           }));
           done();
         });
@@ -102,9 +138,11 @@ describe('Database tests', () => {
 
     it('if replay with given md5 already exists it will return that replay instead of inserting', (done) => {
       insertReplay({ md5: 'replay1', prop1: 'someproperty', matchup: 'HHvOO' }).then((r) => {
-        expect(r).toEqual({ replay: 1, _id: 'replay1', matchup: 'HvO' });
-        db.allDocs({ include_docs: true }).then((d) => {
-          expect(d.rows.length).toBe(3);
+        expect(r).toEqual({
+          replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: '2018-08-17T18:00:00.000Z', md5: 'replay1',
+        });
+        db.find({ selector: { md5: { $exists: true } } }).then((d) => {
+          expect(d.docs.length).toBe(3);
           done();
         });
       });

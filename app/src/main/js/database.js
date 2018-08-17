@@ -5,13 +5,28 @@ PouchDB.plugin(find);
 
 const db = new PouchDB('./replays');
 
-const getReplays = (page, perPage, filter = {}) =>
-  db.find({ selector: filter, limit: perPage, skip: (page - 1) * perPage })
+db.createIndex({
+  index: {
+    fields: ['insertDate', 'md5', 'matchup'],
+  },
+});
+
+
+const getReplays = (page, perPage, filter = {}) => {
+  const filterMerged = {
+    $and: [
+      { insertDate: { $gt: true } },
+      { md5: { $exists: true } },
+      filter],
+  };
+  return db.find({
+    selector: filterMerged, limit: perPage, skip: (page - 1) * perPage, sort: [{ insertDate: 'desc' }],
+  })
     .then(r => r.docs.map((d) => {
       delete d._rev;
       return d;
     }));
-
+};
 /* istanbul ignore next */
 const matchupMapReduce = {
   map: (doc) => {
@@ -22,7 +37,7 @@ const matchupMapReduce = {
   reduce: () => true,
 };
 
-const getReplayCount = () => db.allDocs().then(e => e.rows.length);
+const getReplayCount = () => db.find({ fields: ['_id', 'md5'], selector: { md5: { $exists: true } } }).then(e => e.docs.length);
 
 const getMatchups = () => db.query(matchupMapReduce, {
   group: true,
