@@ -52,6 +52,30 @@ describe('Database tests', () => {
         done();
       });
     });
+
+    it('takes perPage and page into account', (done) => {
+      Promise.all([
+        getReplays(1, 2).then((r) => {
+          expect(r).toEqual([{ replay: 1, _id: 'replay1', matchup: 'HvO' },
+            { replay: 2, _id: 'replay2', matchup: 'HvU' }]);
+        }),
+        getReplays(2, 2).then((r) => {
+          expect(r).toEqual([{ replay: 3, _id: 'replay3', matchup: 'HvO' }]);
+        })])
+        .then(() => done());
+    });
+
+    it('can filter with specific properties', (done) => {
+      getReplays(1, 10, { matchup: 'HvO' }).then((r) => {
+        expect(r).toEqual(
+          [
+            { replay: 1, _id: 'replay1', matchup: 'HvO' },
+            { replay: 3, _id: 'replay3', matchup: 'HvO' },
+          ],
+        );
+        done();
+      });
+    });
   });
 
   describe('getReplay()', () => {
@@ -73,6 +97,23 @@ describe('Database tests', () => {
           }));
           done();
         });
+      });
+    });
+
+    it('if replay with given md5 already exists it will return that replay instead of inserting', (done) => {
+      insertReplay({ md5: 'replay1', prop1: 'someproperty', matchup: 'HHvOO' }).then((r) => {
+        expect(r).toEqual({ replay: 1, _id: 'replay1', matchup: 'HvO' });
+        db.allDocs({ include_docs: true }).then((d) => {
+          expect(d.rows.length).toBe(3);
+          done();
+        });
+      });
+    });
+
+    it('rejects if replay to be inserted does not have a md5 property', (done) => {
+      insertReplay({ prop1: 'someproperty', matchup: 'HHvOO' }).catch((err) => {
+        expect(err).toEqual(new Error('Replay needs a md5 property.'));
+        done();
       });
     });
   });

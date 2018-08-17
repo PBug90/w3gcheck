@@ -12,9 +12,12 @@ const getReplays = (page, perPage, filter = {}) =>
       return d;
     }));
 
+/* istanbul ignore next */
 const matchupMapReduce = {
   map: (doc) => {
-    emit(doc.matchup, 1); //eslint-disable-line
+    if (doc.matchup) {
+      emit(doc.matchup, 1); //eslint-disable-line
+    }
   },
   reduce: () => true,
 };
@@ -31,7 +34,7 @@ const getReplay = md5 => db.get(md5).then((r) => {
 });
 
 const insertReplay = (replay) => {
-  if (!replay.md5) { return Promise.reject(new Error('replay needs a md5 property.')); }
+  if (!replay.md5) { return Promise.reject(new Error('Replay needs a md5 property.')); }
   return getReplay(replay.md5).then(doc => Promise.resolve(doc))
     .catch(() => db.put({ ...replay, _id: replay.md5 }));
 };
