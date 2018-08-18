@@ -3,6 +3,7 @@ import {
   getReplays,
   getReplay,
   insertReplay,
+  getMaps,
   getReplayCount,
   db,
 }
@@ -151,6 +152,70 @@ describe('Database tests', () => {
     it('rejects if replay to be inserted does not have a md5 property', (done) => {
       insertReplay({ prop1: 'someproperty', matchup: 'HHvOO' }).catch((err) => {
         expect(err).toEqual(new Error('Replay needs a md5 property.'));
+        done();
+      });
+    });
+  });
+});
+
+describe('Database tests', () => {
+  beforeEach((done) => {
+    removeAllDocs().then(() =>
+      Promise.all(
+        [
+          db.put({
+            replay: 1,
+            _id: 'replay1',
+            matchup: 'HvO',
+            insertDate: new Date('2018-08-17T18:00:00.000Z'),
+            md5: 'replay1',
+            meta: {
+              mapNameCleaned: 'TwistedMeadows.w3x',
+            },
+          }),
+          db.put({
+            replay: 2,
+            _id: 'replay2',
+            matchup: 'HvU',
+            insertDate: new Date('2018-08-17T18:01:00.000Z'),
+            md5: 'replay2',
+            meta: {
+              mapNameCleaned: 'TurtleRock.w3x',
+            },
+          }),
+          db.put({
+            replay: 3,
+            _id: 'replay3',
+            matchup: 'HvO',
+            insertDate: new Date('2018-08-17T18:02:00.000Z'),
+            md5: 'replay3',
+            meta: {
+              mapNameCleaned: 'TwistedMeadows.w3x',
+            },
+          }),
+          db.put({
+            replay: 4,
+            _id: 'replay4',
+            matchup: 'HvO',
+            insertDate: new Date('2018-08-17T18:03:00.000Z'),
+            md5: 'replay4',
+            meta: {
+              mapNameCleaned: 'GnollWood.w3x',
+            },
+          }),
+        ],
+      )
+        .then(() => db.createIndex({
+          index: {
+            fields: ['insertDate', 'md5', 'matchup', 'meta.map', 'meta.mapNameCleaned'],
+          },
+        }))
+        .then(() => done()));
+  });
+  describe('getMaps()', () => {
+    it('returns a distinct list of maps that exist in the database', (done) => {
+      getMaps().then((r) => {
+        expect(r).toEqual(['GnollWood.w3x', 'TurtleRock.w3x', 'TwistedMeadows.w3x']);
         done();
       });
     });

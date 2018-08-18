@@ -7,7 +7,7 @@ const db = new PouchDB('./replays');
 
 db.createIndex({
   index: {
-    fields: ['insertDate', 'md5', 'matchup'],
+    fields: ['insertDate', 'md5', 'matchup', 'meta.map', 'meta.mapNameCleaned'],
   },
 });
 
@@ -37,9 +37,23 @@ const matchupMapReduce = {
   reduce: () => true,
 };
 
+/* istanbul ignore next */
+const mapMapReduce = {
+  map: (doc) => {
+    if (doc.meta.mapNameCleaned) {
+      emit(doc.meta.mapNameCleaned, 1); //eslint-disable-line
+    }
+  },
+  reduce: () => true,
+};
+
 const getReplayCount = () => db.find({ fields: ['_id', 'md5'], selector: { md5: { $exists: true } } }).then(e => e.docs.length);
 
 const getMatchups = () => db.query(matchupMapReduce, {
+  group: true,
+}).then(result => result.rows.map(r => r.key));
+
+const getMaps = () => db.query(mapMapReduce, {
   group: true,
 }).then(result => result.rows.map(r => r.key));
 
@@ -56,6 +70,7 @@ const insertReplay = (replay) => {
 
 module.exports = {
   db,
+  getMaps,
   getMatchups,
   getReplays,
   getReplay,
