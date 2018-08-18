@@ -1,0 +1,51 @@
+<h1>Background</h1>
+
+<script type="text/javascript">
+  const {
+    ipcRenderer
+  } = require('electron');
+  const W3GReplay = require('w3gjs');
+
+  const parser = new W3GReplay();
+
+  // Send logs as messages to the main thread to show on the console
+  function log(value) {
+    ipcRenderer.send('to-main', process.pid + ': ' + value);
+  }
+  // let the main thread know this thread is ready to process something
+  function ready() {
+    ipcRenderer.send('ready')
+  }
+
+  function workDone(result, index, error = null) {
+    ipcRenderer.send('parsed', result, index, error)
+  }
+
+  // do some work that will tie up the processor for a while
+  function work(arg) {
+    console.log(arg)
+    const parsed = parser.parse(arg);
+    console.log(parsed)
+    return parsed
+  }
+  // if message is received, pass it back to the renderer via the main thread
+  ipcRenderer.on('message', (event, arg) => {
+    log('received ' + arg)
+    ipcRenderer.send('for-renderer', process.pid + ': reply to ' + arg)
+    ready()
+  });
+
+  ipcRenderer.on('task', (event, index, path) => {
+    console.log(event, index, path)
+    let parsed = null
+    try {
+      parsed = work(path)
+      workDone(parsed, index)
+    } catch (err) {
+      console.log(err, err.message)
+      workDone(null, index, err.message)
+    }
+    ready()
+  })
+  ready()
+</script>

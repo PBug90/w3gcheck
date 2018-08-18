@@ -39,6 +39,11 @@ module.exports = {
         ],
       },
       {
+        type: 'javascript/auto',
+        test: /\.mjs$/,
+        use: [],
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules(?!(\/|\\)w3gjs)/,
         use: {
@@ -91,6 +96,10 @@ module.exports = {
       },
       {
         from: './src/main/index.html',
+        to: path.join(__dirname, '../app/build'),
+      },
+      {
+        from: './src/main/ReplayParser.html',
         to: path.join(__dirname, '../app/build'),
       },
     ]),

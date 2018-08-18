@@ -1,25 +1,25 @@
+const {
+  ipcRenderer,
+} = require('electron');
 
-const cp = require('child_process');
-
-const child = cp.fork(`${process.cwd()}/app/src/AsyncReplayParser/parserProcess`, [], { env: process.env, silent: true });
 const currentWork = [];
 let current = -1;
 
-child.stdout.on('data', (data) => { console.log(data.toString()); }); // eslint-disable-line
-child.stderr.on('data', (data) => { console.log(data.toString()); }); // eslint-disable-line
 
 const doWork = filepath => new Promise((resolve, reject) => {
   current += 1;
   currentWork[current] = { resolve, reject };
-  child.send({ current, filepath });
+  console.log({ current, filepath }); // eslint-disable-line
+  ipcRenderer.send('parseReplay', current, filepath);
 });
 
-child.on('message', ({ current: current2, parsed, error }) => {
+ipcRenderer.on('parsed', (event, replay, current2, error) => {
+  console.log('Replay parsed done: ', replay, current2, error); // eslint-disable-line
   if (currentWork[current2]) {
     if (error) {
       currentWork[current2].reject(new Error(error));
     } else {
-      currentWork[current2].resolve(parsed);
+      currentWork[current2].resolve(replay);
     }
   }
 });
