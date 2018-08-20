@@ -15,6 +15,9 @@ export function selectReplay(hash) {
 }
 
 export function parseFiles(list) {
+  if (list.length > 25) {
+    list = list.slice(0, 25);
+  }
   return (dispatch, getState) => {
     dispatch({
       type: UPDATE_FILE_LIST,

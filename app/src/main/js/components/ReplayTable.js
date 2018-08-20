@@ -74,11 +74,12 @@ class ReplayTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {replayList.map(r => (<ReplayTableRow
-              key={replays[r].md5}
-              replay={replays[r]}
-              selectReplay={selectReplay}
-            />)) }
+            {replayList.map(r =>
+              (<ReplayTableRow
+                key={replays[r].md5}
+                replay={replays[r]}
+                selectReplay={selectReplay}
+              />)) }
           </TableBody>
         </Table>
       </div>

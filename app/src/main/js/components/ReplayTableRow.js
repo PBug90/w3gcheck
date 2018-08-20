@@ -10,11 +10,12 @@ import RaceColoredPlayerName from './RaceColoredPlayerName';
 import { convertTime } from '../utility/replay';
 
 
-const ParsedItemContent = (props) => {
+const ReplayTableRow = (props) => {
   const { replay } = props;
   const players = Object.values(replay.players).map(
     player =>
       (<RaceColoredPlayerName
+        key={player.id}
         name={player.name}
         race={player.detectedRace || player.race || 0}
       />),
@@ -43,7 +44,7 @@ const ParsedItemContent = (props) => {
     </TableRow>
   );
 };
-ParsedItemContent.propTypes = {
+ReplayTableRow.propTypes = {
   replay: PropTypes.object,
   selectReplay: PropTypes.func,
 };
@@ -52,4 +53,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}), dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(ParsedItemContent);
+export default connect(null, mapDispatchToProps)(ReplayTableRow);

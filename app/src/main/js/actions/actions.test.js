@@ -28,12 +28,15 @@ import {
 } from './settings';
 import database from '../database';
 
+const fs = require('fs');
+
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('../database');
 jest.mock('AsyncReplayParser');
 jest.mock('md5');
+jest.mock('fs');
 
 describe('loadReplays action test', () => {
   it('dispatches LOAD_REPLAYS_PENDING and LOAD_REPLAYS_SUCCESS', (done) => {
@@ -105,6 +108,22 @@ describe('parseFiles action test', () => {
 
     const actualActions = store.getActions().map(action => action.type);
     expect(actualActions).toEqual(expectedActions);
+  });
+
+  it('dispatches UPDATE_FILE_LIST and limits number of files to the first 25 selected', () => {
+    const store = mockStore({ fileList: [] });
+    const payload = Array.from({ length: 30 }, (v, k) => `${k + 1}`);
+    const expectedAction = {
+      type: UPDATE_FILE_LIST,
+      payload: payload.slice(0, 25),
+    };
+
+    database.getReplays.mockResolvedValue([]);
+    database.getReplayCount.mockResolvedValue(0);
+
+    store.dispatch(parseFiles(payload));
+    const actualAction = store.getActions()[0];
+    expect(actualAction).toEqual(expectedAction);
   });
 
   it('dispatches PARSE_REPLAY_ASYNC_PENDING for each given file', () => {
@@ -217,17 +236,34 @@ describe('saveSettings action test', () => {
   });
 });
 
-
-const fs = require('fs');
-
 describe('loadSettings action test', () => {
   it('dispatches LOAD_SETTINGS with given payload', () => {
     fs.readFileSync = jest.fn().mockReturnValue('{"somesetting": 123, "someOtherSetting": "/a/path/" }');
+
     const store = mockStore({ settings: {} });
     const expectedActions = [
       {
         type: LOAD_SETTINGS,
         payload: { somesetting: 123, someOtherSetting: '/a/path/' },
+      },
+    ];
+
+    store.dispatch(loadSettings());
+
+    const actualActions = store.getActions();
+    expect(actualActions).toEqual(expectedActions);
+  });
+
+  it('handles an error in fs.readFileSync and returns an empty object {}', () => {
+    fs.readFileSync = jest.fn().mockImplementation(() => {
+      throw new Error('Read error.');
+    });
+
+    const store = mockStore({ settings: {} });
+    const expectedActions = [
+      {
+        type: LOAD_SETTINGS,
+        payload: {},
       },
     ];
 
