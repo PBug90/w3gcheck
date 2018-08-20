@@ -1,15 +1,23 @@
 
 const electron = require('electron');
 // Module to control application life.
-const { app } = electron;
-// Module to create native browser window.
-const { BrowserWindow } = electron;
+const { ipcMain, BrowserWindow, app } = electron;
+
 const path = require('path');
 const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let parserWindow;
+// Create a hidden background window
+function createBgWindow() {
+  parserWindow = new BrowserWindow({ show: true });
+  parserWindow.loadURL(`file://${__dirname}/ReplayParser.html`);
+  parserWindow.on('closed', () => {
+    console.log('Background window closed'); // eslint-disable-line
+  });
+}
 
 /** This function will create the mainWindow */
 function createWindow() {
@@ -22,6 +30,20 @@ function createWindow() {
     protocol: 'file:',
     slashes: true,
   }));
+  createBgWindow();
+  ipcMain.on('ready', () => {
+
+  });
+
+  ipcMain.on('parsed', (event, parsed, current, error) => {
+    console.log(`A replay was parsed successfully${current}`, error); // eslint-disable-line
+    mainWindow.webContents.send('parsed', parsed, current, error);
+  });
+
+  ipcMain.on('parseReplay', (event, current, filepath) => {
+    console.log(`main received parsing request: ${current} ${filepath}`); // eslint-disable-line
+    parserWindow.webContents.send('task', current, filepath);
+  });
 
   if (process.env.NODE_ENV === 'development') {
     // Open the DevTools.
@@ -42,9 +64,10 @@ function createWindow() {
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
+    parserWindow.destroy();
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+    // when you should delete the corresponding element.prom
     mainWindow = null;
   });
 }

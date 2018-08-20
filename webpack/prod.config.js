@@ -23,6 +23,7 @@ module.exports = {
     fs: "require('fs')",
     path: "require('path')",
     zlib: "require('zlib')",
+    leveldown: "require('leveldown')",
   },
   mode: 'production',
   output: {
@@ -36,6 +37,11 @@ module.exports = {
         use: [
           'file-loader',
         ],
+      },
+      {
+        type: 'javascript/auto',
+        test: /\.mjs$/,
+        use: [],
       },
       {
         test: /\.js$/,
@@ -90,6 +96,10 @@ module.exports = {
       },
       {
         from: './src/main/index.html',
+        to: path.join(__dirname, '../app/build'),
+      },
+      {
+        from: './src/main/ReplayParser.html',
         to: path.join(__dirname, '../app/build'),
       },
     ]),

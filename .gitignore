@@ -6,3 +6,4 @@ coverage
 app/build
 *.db
 settings.json
+/replays*

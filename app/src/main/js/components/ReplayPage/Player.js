@@ -48,7 +48,7 @@ const styles = theme => ({
 });
 
 export default withStyles(styles)(({
-  classes, name, isObs, race,
+  classes, name, isObs, race, apm,
 }) => (
   <ExpansionPanel elevation={1} className={classes.tester}>
     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
@@ -60,7 +60,10 @@ export default withStyles(styles)(({
       <div className={classes.column}>
         <Typography className={classes.heading} >{name}</Typography>
       </div>
-      {race}
+      <div className={classes.column}>
+        <Typography variant="caption" gutterBottom align="center">{apm} APM</Typography>
+      </div>
+
     </ExpansionPanelSummary>
     <ExpansionPanelDetails>
       <Typography>

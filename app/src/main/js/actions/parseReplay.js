@@ -13,29 +13,26 @@ export function parseReplay(item, index) {
     dispatch({ type: PARSE_REPLAY_ASYNC_PENDING, payload: index });
     const hash = md5(item.path);
     return db.getReplay(hash)
-      .then((replay) => {
-        if (replay) {
-          return dispatch({
-            type: PARSE_REPLAY_ASYNC_DONE,
-            payload: {
-              index, replay, md5: replay.md5, filepath: item, fromDB: true,
-            },
-          });
-        }
-        return parserPromise(item.path).then((replayParsed) => {
-          replayParsed.md5 = hash;
-          replayParsed.meta.mapNameCleaned = cleanMapName(replayParsed.meta.mapName);
-          replayParsed.insertDate = new Date();
-          replayParsed.filepath = item.path;
-          dispatch({
-            type: PARSE_REPLAY_ASYNC_DONE,
-            payload: {
-              index, replay: replayParsed, md5: replayParsed.md5, fromDB: false,
-            },
-          });
+      .then(replay => dispatch({
+        type: PARSE_REPLAY_ASYNC_DONE,
+        payload: {
+          index, replay, md5: replay.md5, filepath: item, fromDB: true,
+        },
+      }))
+      .catch(() => parserPromise(item.path).then((replayParsed) => {
+        replayParsed.md5 = hash;
+        replayParsed.meta.mapNameCleaned = cleanMapName(replayParsed.meta.mapName);
+        replayParsed.insertDate = new Date();
+        replayParsed.filepath = item.path;
+        dispatch({
+          type: PARSE_REPLAY_ASYNC_DONE,
+          payload: {
+            index, replay: replayParsed, md5: replayParsed.md5, fromDB: false,
+          },
         });
-      }).catch((err) => {
-        dispatch({ type: PARSE_REPLAY_ASYNC_ERROR, payload: err.message });
+      }))
+      .catch((err) => {
+        dispatch({ type: PARSE_REPLAY_ASYNC_ERROR, payload: { fileIndex: index, error: err } });
       });
   };
 }

@@ -52,6 +52,7 @@ class Replay extends React.Component {
             name={players[playerId].name}
             isObs={false}
             race={players[playerId].detectedRace}
+            apm={players[playerId].apm}
           />),
         );
         return <Team>{playerItems}</Team>;

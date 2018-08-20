@@ -1,8 +1,18 @@
 language: node_js
 node_js:
-  - "8"
+- '8'
 script: yarn test:ci
 before_script:
-  - yarn add codeclimate-test-reporter -g
+- yarn add codeclimate-test-reporter -g
 after_script:
-  - codeclimate-test-reporter < ./coverage/lcov.info
+- codeclimate-test-reporter < ./coverage/lcov.info
+before_deploy:
+- yarn dist
+deploy:
+  provider: releases
+  api_key:
+    secure: itiVM4t5QeMf/1kDCQ4gSz2gzKyWgm8dx3acUdWEueey2F4HZjep4NPbF4k/U7bHlBT4hL5jJgquDKrUaFEHokWoigO+a17SCgdMzzXjKRmhuiUWnxodiGTH3AmmGhFXIdddDI5NNx8/vXn+1YVR9U9kKPhVtvFX1TE4RZOPXudkG8OatLARC60sdlyWtBxOisnt+8YndMGRA2oD4W22YgXoUa8pIZKMIIaipnSGltpCkYtDvRA+QhQnZqCK9nN3d/TB+N+Wk0I4x+eaOvMO6IihAjzGFrLRtZRn/JQekV+WW1HwikPQ9b3WCXGmSczidlZaj9lS6t57RTeMPCDSaXwBPcyzzr4hCMOyFGuLYu5eC8Us16INnkjPw3o31OEIilBi9nzVztHKShKHKUK6vmgVIuGFaEjXlOBtgDqGJmbE3r9FvvQvjvcS3TgF0PK8tG+pZ6Y6pbdJFcO3Za7XbW0QsIyjsXMDmI1bh3/xeuWMCEwcBXdPT/AcgetZ7DgV0Ght0Rwx02Y3bUhBHMXOZSeU2Csn/R7U9ecU/Aukf70zsQYatS8KiArsbmPjgKEL3ak9i6V0x+d1rP+MFiBn5LRvVK26C72D0GMJvPtXew1VAPNhA+YheGX1B4/NiieY+mwvUoT4Q3On21RYDBcSPGolPyMwNxHzJHg7J6WkOMU=
+  file: 'release/W3GCheck Setup 0.0.1-a.exe'
+  skip_cleanup: true
+  on:
+    tags: true
