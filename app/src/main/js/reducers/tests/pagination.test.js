@@ -4,7 +4,9 @@ import { LOAD_REPLAYS_DONE } from '../../actions/loadReplays';
 
 describe('pagination reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({ currentPage: 0, perPage: 0, totalPages: 0 });
+    expect(reducer(undefined, {})).toEqual({
+      currentPage: 0, perPage: 25, totalPages: 0, totalReplayCount: 0,
+    });
   });
 
   it('should handle LOAD_REPLAYS_DONE', () => {

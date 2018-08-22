@@ -1,9 +1,40 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import ReplayTable from '../components/ReplayTable';
-import * as CounterActions from '../actions/replaylist';
-import * as CounterActions2 from '../actions/loadReplays';
+import * as replayListActions from '../actions/replaylist';
+import * as loadReplaysActions from '../actions/loadReplays';
+
+
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+  },
+  table: {
+    minWidth: 1020,
+  },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+});
+
+const ReplayCollectionPage = props =>
+  (
+    <Paper >
+      <Toolbar>
+        <Typography variant="title" id="tableTitle">
+            Your replay collection
+        </Typography>
+      </Toolbar>
+      <ReplayTable {...props} />
+    </Paper>
+  );
+
 
 function mapStateToProps(state) {
   return {
@@ -15,7 +46,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, CounterActions, CounterActions2), dispatch);
+  return bindActionCreators(Object.assign({}, replayListActions, loadReplaysActions), dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReplayTable);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(ReplayCollectionPage),
+);

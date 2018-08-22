@@ -9,23 +9,27 @@ import {
   SELECT_REPLAY,
   UPDATE_FILE_LIST,
 } from './replaylist';
+
 import {
   PARSE_REPLAY_ASYNC_PENDING,
   PARSE_REPLAY_ASYNC_DONE,
   PARSE_REPLAY_ASYNC_ERROR,
 } from './parseReplay';
+
 import {
   loadReplays,
   LOAD_REPLAYS_PENDING,
   LOAD_REPLAYS_DONE,
   LOAD_REPLAYS_ERROR,
 } from './loadReplays';
+
 import {
   saveSettings,
   loadSettings,
   SAVE_SETTINGS,
   LOAD_SETTINGS,
 } from './settings';
+
 import database from '../database';
 
 const fs = require('fs');

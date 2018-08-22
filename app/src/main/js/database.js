@@ -17,16 +17,18 @@ const getReplays = (page, perPage, filter = {}) => {
     $and: [
       { insertDate: { $gt: true } },
       { md5: { $exists: true } },
-      filter],
+      filter,
+    ],
   };
   return db.find({
-    selector: filterMerged, limit: perPage, skip: (page - 1) * perPage, sort: [{ insertDate: 'desc' }],
+    selector: filterMerged, limit: perPage, skip: page * perPage, sort: [{ insertDate: 'desc' }],
   })
     .then(r => r.docs.map((d) => {
       delete d._rev;
       return d;
     }));
 };
+
 /* istanbul ignore next */
 const matchupMapReduce = {
   map: (doc) => {

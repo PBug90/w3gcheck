@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import ReplayTableRow from './ReplayTableRow';
+import TablePaginationActions from './TablePaginationActions';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
@@ -20,32 +22,28 @@ const styles = theme => ({
   },
 });
 
-class ReplayTable extends React.Component {
+class ReplayTable extends React.Component { //eslint-disable-line
   constructor(props) {
     super(props);
     this.refresh = this.refresh.bind(this);
-    this.previousPage = this.previousPage.bind(this);
-    this.nextPage = this.nextPage.bind(this);
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
   }
 
   componentDidMount() {
     this.refresh();
   }
 
-
   refresh() {
-    this.props.loadReplays(1, 25);
+    this.props.loadReplays(0, this.props.pagination.perPage);
   }
 
-  previousPage() {
-    this.props.loadReplays(
-      this.props.pagination.currentPage > 1 ? this.props.pagination.currentPage - 1 : 1,
-      25,
-    );
+  handleChangePage(e, page) {
+    this.props.loadReplays(page, this.props.pagination.perPage);
   }
 
-  nextPage() {
-    this.props.loadReplays(this.props.pagination.currentPage + 1, 25);
+  handleChangeRowsPerPage(e) {
+    this.props.loadReplays(this.props.pagination.currentPage, e.target.value);
   }
 
   render() {
@@ -54,15 +52,6 @@ class ReplayTable extends React.Component {
     } = this.props;
     return (
       <div>
-        <Button variant="outlined" className={classes.button} onClick={this.refresh}>
-          Refresh
-        </Button>
-        <Button disabled={pagination.currentPage === 1} variant="outlined" className={classes.button} onClick={this.previousPage}>
-          previous Page
-        </Button>
-        <Button disabled={pagination.currentPage === pagination.totalPages} variant="outlined" className={classes.button} onClick={this.nextPage}>
-          next Page
-        </Button>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -70,7 +59,7 @@ class ReplayTable extends React.Component {
               <TableCell>Matchup</TableCell>
               <TableCell>Map</TableCell>
               <TableCell>Duration</TableCell>
-              <TableCell />
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -81,6 +70,19 @@ class ReplayTable extends React.Component {
                 selectReplay={selectReplay}
               />)) }
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                colSpan={3}
+                count={pagination.totalReplayCount}
+                rowsPerPage={pagination.perPage}
+                page={pagination.currentPage}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
         </Table>
       </div>
     );

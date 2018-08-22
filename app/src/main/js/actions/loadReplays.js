@@ -12,7 +12,12 @@ export function loadReplays(page = 0, perPage = 10, filter = {}) {
         db.getReplayCount().then(count => dispatch({
           type: LOAD_REPLAYS_DONE,
           payload: {
-            page, perPage, replays: result, totalPages: Math.ceil(count / perPage), filter,
+            page,
+            perPage,
+            replays: result,
+            totalReplayCount: count,
+            totalPages: Math.ceil(count / perPage),
+            filter,
           },
         }));
       })

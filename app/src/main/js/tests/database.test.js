@@ -58,7 +58,7 @@ describe('Database tests', () => {
 
   describe('getReplays()', () => {
     it('returns all replays that exist in database ordered by insertDate descending', (done) => {
-      getReplays(1, 10).then((r) => {
+      getReplays(0, 10).then((r) => {
         expect(r).toEqual([
           {
             replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: '2018-08-17T18:02:00.000Z', md5: 'replay3',
@@ -77,7 +77,7 @@ describe('Database tests', () => {
 
     it('takes perPage and page into account', (done) => {
       Promise.all([
-        getReplays(1, 2).then((r) => {
+        getReplays(0, 2).then((r) => {
           expect(r).toEqual([
             {
               replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: '2018-08-17T18:02:00.000Z', md5: 'replay3',
@@ -86,7 +86,7 @@ describe('Database tests', () => {
               replay: 2, _id: 'replay2', matchup: 'HvU', insertDate: '2018-08-17T18:01:00.000Z', md5: 'replay2',
             }]);
         }),
-        getReplays(2, 2).then((r) => {
+        getReplays(1, 2).then((r) => {
           expect(r).toEqual([{
             replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: '2018-08-17T18:00:00.000Z', md5: 'replay1',
           }]);
@@ -95,7 +95,7 @@ describe('Database tests', () => {
     });
 
     it('can filter with specific properties', (done) => {
-      getReplays(1, 10, { matchup: 'HvO' }).then((r) => {
+      getReplays(0, 10, { matchup: 'HvO' }).then((r) => {
         expect(r).toEqual(
           [
             {
