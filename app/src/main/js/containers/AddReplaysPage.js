@@ -14,7 +14,7 @@ class AddReplaysPage extends React.Component {
   }
 
   showDialog() {
-    const result = dialog.showOpenDialog({ properties: ['multiSelections'] });
+    const result = dialog.showOpenDialog({ properties: ['multiSelections', 'openFile'] });
     if (result) { this.props.dispatch(parseFiles(result)); }
   }
 
