@@ -11,6 +11,8 @@
 An electron-based multi-platform application that can parse and manage your WarCraft III replays.
 
 ## Basic development setup
+Ensure [node-gyp](https://github.com/nodejs/node-gyp) is installed.
+
 ```bash
 git clone git@github.com:anXieTyPB/w3gcheck.git
 yarn install
@@ -19,7 +21,6 @@ yarn dev
 
 
 ## Bug reports
-
 Please use the issue tracker to create a bug report.
 
 ## Contribute
