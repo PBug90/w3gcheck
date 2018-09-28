@@ -5,12 +5,6 @@ PouchDB.plugin(find);
 
 const db = new PouchDB('./replays');
 
-db.createIndex({
-  index: {
-    fields: ['insertDate', 'md5', 'matchup', 'meta.map', 'meta.mapNameCleaned'],
-  },
-});
-
 
 const getReplays = (page, perPage, filter = {}) => {
   const filterMerged = {
@@ -20,13 +14,19 @@ const getReplays = (page, perPage, filter = {}) => {
       filter,
     ],
   };
-  return db.find({
-    selector: filterMerged, limit: perPage, skip: page * perPage, sort: [{ insertDate: 'desc' }],
+  return db.createIndex({
+    index: {
+      fields: ['insertDate', 'md5', 'matchup', 'meta.mapName', 'meta.mapNameCleaned'],
+      name: 'myindex',
+    },
   })
-    .then(r => r.docs.map((d) => {
-      delete d._rev;
-      return d;
-    }));
+    .then(() => db.find({
+      selector: filterMerged, limit: perPage, skip: page * perPage, sort: [{ insertDate: 'desc' }],
+    })
+      .then(r => r.docs.map((d) => {
+        delete d._rev;
+        return d;
+      })));
 };
 
 /* istanbul ignore next */
@@ -66,6 +66,7 @@ const getReplay = md5 => db.get(md5).then((r) => {
 
 const insertReplay = (replay) => {
   if (!replay.md5) { return Promise.reject(new Error('Replay needs a md5 property.')); }
+  if (!replay.insertDate) { return Promise.reject(new Error('Replay needs an insertDate property.')); }
   return getReplay(replay.md5).then(doc => Promise.resolve(doc))
     .catch(() => db.put({ ...replay, _id: replay.md5 }));
 };

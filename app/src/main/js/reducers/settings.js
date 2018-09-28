@@ -1,6 +1,6 @@
 import { LOAD_SETTINGS, SAVE_SETTINGS } from '../actions/settings';
 
-export default function replayList(state = { wc3FilePath: '' }, action) {
+export default function replayList(state = { wc3FilePath: '', lastReplayDirectory: '' }, action) {
   switch (action.type) {
     case LOAD_SETTINGS:
       return action.payload;

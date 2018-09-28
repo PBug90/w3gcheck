@@ -5,10 +5,14 @@ import { withStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
+import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { saveSettings } from '../actions/settings';
+
 
 const styles = theme => ({
   container: {
@@ -21,7 +25,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,
-    width: 400,
+    width: 600,
   },
 
 });
@@ -34,8 +38,8 @@ class SettingsPage extends React.Component { //eslint-disable-line
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  showDialog(formValue) {
-    const result = dialog.showOpenDialog({});
+  showDialog(formValue, dialogOptions = []) {
+    const result = dialog.showOpenDialog({ properties: dialogOptions });
     if (result) { this.props.change(formValue, result[0]); }
   }
 
@@ -46,29 +50,56 @@ class SettingsPage extends React.Component { //eslint-disable-line
   render() {
     const { classes, handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)} className={classes.container} >
-        <FormControl component="fieldset" className={classes.control}>
-          <FormLabel component="legend">Warcraft III Executable Path</FormLabel>
-          <FormGroup>
-            <Field
-              name="wc3FilePath"
-              component={TextField}
-              placeholder="Street"
-              InputProps={{
-            readOnly: true,
-          }}
-            />
-            <Button onClick={() => this.showDialog('wc3FilePath')}>Set Path</Button>
-          </FormGroup>
-        </FormControl>
+      <Paper>
+        <form onSubmit={handleSubmit(this.onSubmit)} className={classes.container} >
+          <FormControl component="fieldset" className={classes.control}>
+            <FormLabel component="legend">Warcraft III Executable Path</FormLabel>
+            <Grid container >
+              <Grid item xs={8}>
+                <FormGroup>
+                  <Field
+                    name="wc3FilePath"
+                    component={TextField}
+                    InputProps={{
+                    readOnly: true,
+                  }}
+                  />
+                </FormGroup>
+              </Grid>
+              <Grid item xs={4}>
+                <Button onClick={() => this.showDialog('wc3FilePath', ['openFile'])}>Set Path</Button>
+              </Grid>
+            </Grid>
 
-        <FormControl component="fieldset" className={classes.control}>
-          <Button type="submit" >Save Settings</Button>
-        </FormControl>
-      </form>
+          </FormControl>
+
+          <FormControl component="fieldset" className={classes.control}>
+            <FormLabel component="legend">Last Replay Directory Path</FormLabel>
+            <Grid container >
+              <Grid item xs={8}>
+                <FormGroup>
+                  <Field
+                    name="lastReplayDirectory"
+                    component={TextField}
+                    InputProps={{
+                    readOnly: true,
+                  }}
+                  />
+                </FormGroup>
+              </Grid>
+              <Grid item xs={4}><Button onClick={() => this.showDialog('lastReplayDirectory', ['openDirectory'])}>Set Path</Button></Grid>
+            </Grid>
+          </FormControl>
+          <Divider />
+          <FormControl component="fieldset" className={classes.control}>
+            <Button type="submit" variant="contained" color="primary" >Save Settings</Button>
+          </FormControl>
+        </form>
+      </Paper>
     );
   }
 }
+
 SettingsPage.propTypes = {
   classes: PropTypes.object,
   change: PropTypes.func,

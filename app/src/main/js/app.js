@@ -12,7 +12,7 @@ import Drawer from './components/Drawer';
 import SettingsPage from './components/SettingsPage';
 import ReplayCollectionPage from './containers/ReplayCollectionPage';
 import AddReplaysPage from './containers/AddReplaysPage';
-
+import FileWatcher from './components/FileWatcher';
 
 const styles = theme => ({
   root: {
@@ -40,6 +40,7 @@ const App = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <Drawer />
+      <FileWatcher />
       <main className={classes.content}>
         <Route exact path="/" component={HomeView} />
         <Route exact path="/replay" component={ReplayPage} />

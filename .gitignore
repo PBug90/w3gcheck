@@ -7,3 +7,4 @@ app/build
 *.db
 settings.json
 /replays*
+yarn-error.log

@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import AddReplaysTable from '../components/AddReplaysTable';
 import { parseFiles } from '../actions/replaylist';
 
@@ -21,11 +25,21 @@ class AddReplaysPage extends React.Component {
   render() {
     const { parsed, fileList, parsestatus } = this.props;
     return (
-      <div>
-        <Button variant="outlined" onClick={this.showDialog}>Parse Replays</Button>
-        <span>currently parsing: {parsestatus.parsing}, parsing errors: {parsestatus.errors}</span>
+      <Paper >
+        <Toolbar>
+          <Grid container>
+            <Grid item xs={4}>
+              <Button variant="outlined" onClick={this.showDialog}>Parse Replays</Button>
+            </Grid>
+            <Grid item xs={4}>
+              {parsestatus.errors > 0 &&
+              <Typography color="error">{parsestatus.errors} parse error(s)</Typography>
+          }
+            </Grid>
+          </Grid>
+        </Toolbar>
         <AddReplaysTable files={fileList} parsed={parsed} />
-      </div>
+      </Paper>
     );
   }
 }

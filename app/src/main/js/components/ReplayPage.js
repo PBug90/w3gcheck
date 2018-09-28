@@ -49,10 +49,8 @@ class Replay extends React.Component {
         const playerItems =
         Object.values(replay.teams[key]).map(
           playerId => (<Player
-            name={players[playerId].name}
             isObs={false}
-            race={players[playerId].detectedRace}
-            apm={players[playerId].apm}
+            playerInfo={players[playerId]}
           />),
         );
         return <Team>{playerItems}</Team>;

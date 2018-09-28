@@ -48,27 +48,23 @@ const styles = theme => ({
 });
 
 export default withStyles(styles)(({
-  classes, name, isObs, race, apm,
+  classes, isObs, playerInfo,
 }) => (
-  <ExpansionPanel elevation={1} className={classes.tester}>
-    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
+  <ExpansionPanel elevation={1} className={classes.tester} expanded>
+    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
       <div className={classes.column}>
         { !isObs &&
-          <Avatar className={classes[race || 0]}>{race ? race[0].toUpperCase() : '?'}</Avatar>
+          <Avatar className={classes[playerInfo.race || 0]}>{playerInfo.race ? playerInfo.race[0].toUpperCase() : '?'}</Avatar>
         }
       </div>
       <div className={classes.column}>
-        <Typography className={classes.heading} >{name}</Typography>
+        <Typography className={classes.heading} >{playerInfo.name}</Typography>
       </div>
       <div className={classes.column}>
-        <Typography variant="caption" gutterBottom align="center">{apm} APM</Typography>
+        <Typography variant="caption" gutterBottom align="center">{playerInfo.apm} APM</Typography>
       </div>
 
     </ExpansionPanelSummary>
-    <ExpansionPanelDetails>
-      <Typography>
-        Player based extra content.
-      </Typography>
-    </ExpansionPanelDetails>
+    <ExpansionPanelDetails />
   </ExpansionPanel>
 ));

@@ -8,6 +8,7 @@ import parsestatus from './parsestatus';
 import replays from './replays';
 import pagination from './pagination';
 import settings from './settings';
+import fileWatchers from './fileWatcher';
 
 const rootReducer = combineReducers({
   fileList,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   replays,
   pagination,
   settings,
+  fileWatchers,
   router: routerReducer,
 });
 
