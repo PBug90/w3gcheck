@@ -4,7 +4,7 @@ import { LOAD_SETTINGS, SAVE_SETTINGS } from '../../actions/settings';
 
 describe('settings reducer', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual({ wc3FilePath: '' });
+    expect(reducer(undefined, {})).toEqual({ wc3FilePath: '', lastReplayDirectory: '' });
   });
 
   it('should handle LOAD_SETTINGS', () => {

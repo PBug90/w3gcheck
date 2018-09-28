@@ -138,7 +138,9 @@ describe('Database tests', () => {
     });
 
     it('if replay with given md5 already exists it will return that replay instead of inserting', (done) => {
-      insertReplay({ md5: 'replay1', prop1: 'someproperty', matchup: 'HHvOO' }).then((r) => {
+      insertReplay({
+        md5: 'replay1', prop1: 'someproperty', matchup: 'HHvOO', insertDate: '2018-08-17T18:00:00.000Z',
+      }).then((r) => {
         expect(r).toEqual({
           replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: '2018-08-17T18:00:00.000Z', md5: 'replay1',
         });
