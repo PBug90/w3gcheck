@@ -210,7 +210,7 @@ describe('parseFiles action test', () => {
       PARSE_REPLAY_ASYNC_ERROR,
     ];
 
-    database.getReplay.mockResolvedValueOnce(null);
+    database.getReplay.mockRejectedValueOnce(null);
     parserPromise.mockResolvedValue(Promise.reject(new Error('Doh!')));
 
     store.dispatch(parseFiles(['somepath']))
