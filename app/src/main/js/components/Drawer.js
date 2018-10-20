@@ -69,13 +69,18 @@ class MainDrawer extends React.Component { //eslint-disable-line
             </ListItemIcon>
             <ListItemText primary="Collection" />
           </ListItem>
+          <ListItem button onClick={() => dispatch(push('/w3gstream'))}>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary="W3G Stream" />
+          </ListItem>
           <ListItem button onClick={() => dispatch(push('/settings'))}>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
             <ListItemText primary="Settings" />
           </ListItem>
-
         </List>
         <List />
       </Drawer>);

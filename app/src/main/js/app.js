@@ -3,10 +3,10 @@ import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import 'typeface-roboto';
 
 import HomeView from './containers/HomePage';
 import ReplayPage from './containers/ReplayPage';
+import W3GStreamPage from './containers/W3GStream';
 
 import Drawer from './components/Drawer';
 import SettingsPage from './components/SettingsPage';
@@ -47,6 +47,7 @@ const App = (props) => {
         <Route exact path="/replays" component={ReplayCollectionPage} />
         <Route exact path="/replays/add" component={AddReplaysPage} />
         <Route exact path="/settings" component={SettingsPage} />
+        <Route exact path="/w3gstream" component={W3GStreamPage} />
       </main>
     </div>);
 };

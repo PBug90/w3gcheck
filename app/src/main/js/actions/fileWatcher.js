@@ -11,10 +11,7 @@ export function fileChanged(filepath) {
   };
 }
 
-export function lastReplayChanged({ filePath, eventType, dirPath }) {
-  if (eventType === 'rename' && filePath === 'LastReplay.w3g') {
-    console.log('We detected a new LastReplay.w3g');
-  }
+export function lastReplayChanged({ filePath, dirPath }) {
   return {
     type: LAST_REPLAY_CHANGED,
     payload: { filePath, fullPath: path.join(dirPath, filePath) },

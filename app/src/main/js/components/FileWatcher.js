@@ -2,10 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fs from 'fs';
+import md5 from 'md5';
+import path from 'path';
 
-import { lastReplayChanged } from '../actions/fileWatcher';
+import { parseLastReplay } from '../actions/parseReplay';
+import { updateLastReplayHash } from '../actions/lastReplay';
 
-class FileWatcher extends React.Component { //eslint-disable-line
+class FileWatcher extends React.PureComponent { //eslint-disable-line
   componentDidMount() {
     this.updateFileWatchers(this.props.fileWatchers, this.props.lastReplayDirectory);
   }
@@ -16,16 +19,17 @@ class FileWatcher extends React.Component { //eslint-disable-line
 
   updateFileWatchers(fileWatchers, lastReplayDirectory) {
     if (lastReplayDirectory) {
-      console.log(`Watching ${lastReplayDirectory}`);
       if (this.lastReplayWatcher) {
         this.lastReplayWatcher.close();
       }
       this.lastReplayWatcher = fs.watch(`${lastReplayDirectory}`, { encoding: 'utf8' }, (eventType, filePath) => {
-        if (filePath) {
-          this.props.dispatch(
-            lastReplayChanged({ filePath, eventType, dirPath: lastReplayDirectory }),
-          );
-        }
+        fs.readFile(path.join(lastReplayDirectory, filePath), (err, buf) => {
+          const hash = md5(buf);
+          if (filePath && eventType === 'rename' && filePath === 'LastReplay.w3g' && hash !== this.props.lastReplayHash) {
+            this.props.dispatch(updateLastReplayHash(hash));
+            this.props.dispatch(parseLastReplay(path.join(lastReplayDirectory, filePath), hash));
+          }
+        });
       });
     }
   }
@@ -45,12 +49,14 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     lastReplayDirectory: state.settings.lastReplayDirectory,
+    lastReplayHash: state.lastReplay.lastReplayHash,
   };
 }
 
 FileWatcher.propTypes = {
   fileWatchers: PropTypes.array,
   lastReplayDirectory: PropTypes.string,
+  lastReplayHash: PropTypes.string,
   dispatch: PropTypes.func,
 };
 

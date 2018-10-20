@@ -9,6 +9,8 @@ import replays from './replays';
 import pagination from './pagination';
 import settings from './settings';
 import fileWatchers from './fileWatcher';
+import lastReplay from './lastReplay';
+import w3gstream from './w3gstream';
 
 const rootReducer = combineReducers({
   fileList,
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
   pagination,
   settings,
   fileWatchers,
+  lastReplay,
+  w3gstream,
   router: routerReducer,
 });
 

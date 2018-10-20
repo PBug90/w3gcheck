@@ -162,7 +162,7 @@ describe('parseFiles action test', () => {
     database.getReplays.mockResolvedValue([]);
     database.getReplayCount.mockResolvedValue(0);
     database.getReplay.mockResolvedValue({ md5: 'somereplaymd5', teams: [] });
-
+    fs.readFile.mockImplementation((path, callback) => callback());
     md5.mockReturnValue('thisisamd5hash');
     store.dispatch(parseFiles(['somepath', 'somepath2']))
       .then(() => {

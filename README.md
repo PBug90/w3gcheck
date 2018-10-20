@@ -10,6 +10,8 @@
 
 An electron-based multi-platform application that can parse and manage your WarCraft III replays.
 
+### **NOTE: This is still heavily WIP.**
+
 ## Basic development setup
 Ensure [node-gyp](https://github.com/nodejs/node-gyp) is installed.
 
