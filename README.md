@@ -4,9 +4,9 @@
 
 
 #### Master branch
-[![Build Status](https://travis-ci.org/anXieTyPB/w3gcheck.svg?branch=master)](https://travis-ci.org/anXieTyPB/w3gcheck)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a87200edc9278906a141/test_coverage)](https://codeclimate.com/github/anXieTyPB/w3gcheck/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a87200edc9278906a141/maintainability)](https://codeclimate.com/github/anXieTyPB/w3gcheck/maintainability)
+[![Build Status](https://travis-ci.org/PBug90/w3gcheck.svg?branch=master)](https://travis-ci.org/PBug90/w3gcheck)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a87200edc9278906a141/test_coverage)](https://codeclimate.com/github/PBug90/w3gcheck/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a87200edc9278906a141/maintainability)](https://codeclimate.com/github/PBug90/w3gcheck/maintainability)
 
 An electron-based multi-platform application that can parse and manage your WarCraft III replays.
 
