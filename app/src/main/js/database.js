@@ -71,7 +71,7 @@ const insertReplay = (replay) => {
     .catch(() => db.put({ ...replay, _id: replay.md5 }));
 };
 
-module.exports = {
+export default {
   db,
   getMaps,
   getMatchups,

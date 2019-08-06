@@ -18,8 +18,13 @@ class AddReplaysPage extends React.Component {
   }
 
   showDialog() {
-    const result = dialog.showOpenDialog({ properties: ['multiSelections', 'openFile'] });
-    if (result) { this.props.dispatch(parseFiles(result)); }
+    dialog.showOpenDialog({ properties: ['multiSelections', 'openFile'] })
+    .then(result => {
+      console.log(result)
+      if (result.canceled === false) { this.props.dispatch(parseFiles(result.filePaths)); }
+    })
+
+    
   }
 
   render() {
