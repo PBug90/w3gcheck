@@ -44,17 +44,8 @@ class Replay extends React.Component {
       return (<Redirect to="/" />);
     }
     const { players } = replay;
-    const teams = Object.keys(replay.teams).map(
-      (key) => {
-        const playerItems =
-        Object.values(replay.teams[key]).map(
-          playerId => (<Player
-            isObs={false}
-            playerInfo={players[playerId]}
-          />),
-        );
-        return <Team>{playerItems}</Team>;
-      },
+    const teams = replay.players.map(
+      (player) => <Team>{<Player isObs={false} playerInfo={player}/>}</Team>
     );
     const actionChart = <ActionChart players={replay.players} />;
     const apmChart = <APMChart players={replay.players} />;

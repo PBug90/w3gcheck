@@ -35,8 +35,7 @@ const ParsedFileTableRow = (props) => {
         {fileInfo.md5 && replay.matchup}
       </TableCell>
       <TableCell>
-
-        {replay && replay.meta.mapNameCleaned}
+        {replay && replay.map.cleaned}
       </TableCell>
       <TableCell>
 

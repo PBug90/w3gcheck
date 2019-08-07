@@ -12,9 +12,7 @@ import fileWatchers from './fileWatcher';
 import lastReplay from './lastReplay';
 import w3gstream from './w3gstream';
 
-const rootReducer = (history) => {
-  console.log(history);
-  return combineReducers({
+const rootReducer = (history) => combineReducers({
     fileList,
     form: formReducer,
     selected,
@@ -28,6 +26,5 @@ const rootReducer = (history) => {
     w3gstream,
     router: connectRouter(history),
   });
-};
 
 export default rootReducer;

@@ -23,8 +23,9 @@ const replayParserPromise = filepath => new Promise((resolve, reject) => {
     resolve(db.getReplay(hash)
       .then(replay => ({ ...replay, fromDB: true }))
       .catch(() => parserPromise(filepath).then((replayParsed) => {
+        console.log(replayParsed);
         replayParsed.md5 = hash;
-        replayParsed.meta.mapNameCleaned = cleanMapName(replayParsed.meta.mapName);
+        replayParsed.map.cleaned = cleanMapName(replayParsed.map.file);
         replayParsed.insertDate = new Date();
         replayParsed.filepath = filepath;
         replayParsed.fromDB = false;
@@ -45,6 +46,7 @@ export function parseReplay(item, index) {
         },
       }))
       .catch((err) => {
+        console.log(err);
         dispatch({ type: PARSE_REPLAY_ASYNC_ERROR, payload: { fileIndex: index, error: err } });
       });
   };
