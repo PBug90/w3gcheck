@@ -1,42 +1,41 @@
-import {
+import db, {
   getMatchups,
   getReplays,
   getReplay,
   insertReplay,
   getMaps,
   getReplayCount,
-  db,
 }
   from '../database';
 
-const removeAllDocs = () =>
-  db.allDocs({ include_docs: true })
-    .then(allDocs => allDocs.rows.map(row => ({ _id: row.id, _rev: row.doc._rev, _deleted: true })))
-    .then(deleteDocs => db.bulkDocs(deleteDocs));
+const removeAllDocs = () => db.allDocs({ include_docs: true })
+  .then((allDocs) => allDocs.rows.map(
+    (row) => ({ _id: row.id, _rev: row.doc._rev, _deleted: true }),
+  ))
+  .then((deleteDocs) => db.bulkDocs(deleteDocs));
 
 
 describe('Database tests', () => {
   beforeEach((done) => {
-    removeAllDocs().then(() =>
-      Promise.all(
-        [
-          db.put({
-            replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: new Date('2018-08-17T18:00:00.000Z'), md5: 'replay1',
-          }),
-          db.put({
-            replay: 2, _id: 'replay2', matchup: 'HvU', insertDate: new Date('2018-08-17T18:01:00.000Z'), md5: 'replay2',
-          }),
-          db.put({
-            replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: new Date('2018-08-17T18:02:00.000Z'), md5: 'replay3',
-          }),
-        ],
-      )
-        .then(() => db.createIndex({
-          index: {
-            fields: ['insertDate', 'md5', 'matchup'],
-          },
-        }))
-        .then(() => done()));
+    removeAllDocs().then(() => Promise.all(
+      [
+        db.put({
+          replay: 1, _id: 'replay1', matchup: 'HvO', insertDate: new Date('2018-08-17T18:00:00.000Z'), md5: 'replay1',
+        }),
+        db.put({
+          replay: 2, _id: 'replay2', matchup: 'HvU', insertDate: new Date('2018-08-17T18:01:00.000Z'), md5: 'replay2',
+        }),
+        db.put({
+          replay: 3, _id: 'replay3', matchup: 'HvO', insertDate: new Date('2018-08-17T18:02:00.000Z'), md5: 'replay3',
+        }),
+      ],
+    )
+      .then(() => db.createIndex({
+        index: {
+          fields: ['insertDate', 'md5', 'matchup'],
+        },
+      }))
+      .then(() => done()));
   });
   describe('getReplayCount()', () => {
     it('returns the number of replays in database', (done) => {
@@ -162,57 +161,56 @@ describe('Database tests', () => {
 
 describe('Database tests', () => {
   beforeEach((done) => {
-    removeAllDocs().then(() =>
-      Promise.all(
-        [
-          db.put({
-            replay: 1,
-            _id: 'replay1',
-            matchup: 'HvO',
-            insertDate: new Date('2018-08-17T18:00:00.000Z'),
-            md5: 'replay1',
-            meta: {
-              mapNameCleaned: 'TwistedMeadows.w3x',
-            },
-          }),
-          db.put({
-            replay: 2,
-            _id: 'replay2',
-            matchup: 'HvU',
-            insertDate: new Date('2018-08-17T18:01:00.000Z'),
-            md5: 'replay2',
-            meta: {
-              mapNameCleaned: 'TurtleRock.w3x',
-            },
-          }),
-          db.put({
-            replay: 3,
-            _id: 'replay3',
-            matchup: 'HvO',
-            insertDate: new Date('2018-08-17T18:02:00.000Z'),
-            md5: 'replay3',
-            meta: {
-              mapNameCleaned: 'TwistedMeadows.w3x',
-            },
-          }),
-          db.put({
-            replay: 4,
-            _id: 'replay4',
-            matchup: 'HvO',
-            insertDate: new Date('2018-08-17T18:03:00.000Z'),
-            md5: 'replay4',
-            meta: {
-              mapNameCleaned: 'GnollWood.w3x',
-            },
-          }),
-        ],
-      )
-        .then(() => db.createIndex({
-          index: {
-            fields: ['insertDate', 'md5', 'matchup', 'meta.map', 'meta.mapNameCleaned'],
+    removeAllDocs().then(() => Promise.all(
+      [
+        db.put({
+          replay: 1,
+          _id: 'replay1',
+          matchup: 'HvO',
+          insertDate: new Date('2018-08-17T18:00:00.000Z'),
+          md5: 'replay1',
+          meta: {
+            mapNameCleaned: 'TwistedMeadows.w3x',
           },
-        }))
-        .then(() => done()));
+        }),
+        db.put({
+          replay: 2,
+          _id: 'replay2',
+          matchup: 'HvU',
+          insertDate: new Date('2018-08-17T18:01:00.000Z'),
+          md5: 'replay2',
+          meta: {
+            mapNameCleaned: 'TurtleRock.w3x',
+          },
+        }),
+        db.put({
+          replay: 3,
+          _id: 'replay3',
+          matchup: 'HvO',
+          insertDate: new Date('2018-08-17T18:02:00.000Z'),
+          md5: 'replay3',
+          meta: {
+            mapNameCleaned: 'TwistedMeadows.w3x',
+          },
+        }),
+        db.put({
+          replay: 4,
+          _id: 'replay4',
+          matchup: 'HvO',
+          insertDate: new Date('2018-08-17T18:03:00.000Z'),
+          md5: 'replay4',
+          meta: {
+            mapNameCleaned: 'GnollWood.w3x',
+          },
+        }),
+      ],
+    )
+      .then(() => db.createIndex({
+        index: {
+          fields: ['insertDate', 'md5', 'matchup', 'meta.map', 'meta.mapNameCleaned'],
+        },
+      }))
+      .then(() => done()));
   });
   describe('getMaps()', () => {
     it('returns a distinct list of maps that exist in the database', (done) => {

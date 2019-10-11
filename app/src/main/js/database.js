@@ -6,9 +6,9 @@ PouchDB.plugin(find);
 const db = new PouchDB('./replays');
 
 
-const getReplays = (page, perPage, filter = {}) => {
+export const getReplays = (page, perPage, filter = {}) => {
   const filterMerged = {
-
+    ...filter,
   };
   return db.createIndex({
     index: {
@@ -45,34 +45,30 @@ const mapMapReduce = {
   reduce: () => true,
 };
 
-const getReplayCount = () => db.find({ fields: ['_id', 'md5'], selector: { md5: { $exists: true } } }).then((e) => e.docs.length);
 
-const getMatchups = () => db.query(matchupMapReduce, {
+export const getReplayCount = () => db.find({ fields: ['_id', 'md5'], selector: { md5: { $exists: true } } }).then((e) => e.docs.length);
+
+
+export const getMatchups = () => db.query(matchupMapReduce, {
   group: true,
 }).then((result) => result.rows.map((r) => r.key));
 
-const getMaps = () => db.query(mapMapReduce, {
+
+export const getMaps = () => db.query(mapMapReduce, {
   group: true,
 }).then((result) => result.rows.map((r) => r.key));
 
-const getReplay = (md5) => db.get(md5).then((r) => {
+
+export const getReplay = (md5) => db.get(md5).then((r) => {
   delete r._rev;
   return r;
 });
 
-const insertReplay = (replay) => {
+export const insertReplay = (replay) => {
   if (!replay.md5) { return Promise.reject(new Error('Replay needs a md5 property.')); }
   if (!replay.insertDate) { return Promise.reject(new Error('Replay needs an insertDate property.')); }
   return getReplay(replay.md5).then((doc) => Promise.resolve(doc))
     .catch(() => db.put({ ...replay, _id: replay.md5 }));
 };
 
-export default {
-  db,
-  getMaps,
-  getMatchups,
-  getReplays,
-  getReplay,
-  insertReplay,
-  getReplayCount,
-};
+export default db;

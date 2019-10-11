@@ -16,8 +16,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(CounterActions, dispatch);
 }
 
-const HomePage = props =>
-  <Home {...props} />;
+const HomePage = (props) => <Home {...props} />;
 
 
 export default compose(

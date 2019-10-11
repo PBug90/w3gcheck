@@ -12,7 +12,7 @@ import green from '@material-ui/core/colors/green';
 import blue from '@material-ui/core/colors/blue';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%',
   },
@@ -53,15 +53,18 @@ export default withStyles(styles)(({
   <ExpansionPanel elevation={1} className={classes.tester} expanded>
     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
       <div className={classes.column}>
-        { !isObs &&
-          <Avatar className={classes[playerInfo.race || 0]}>{playerInfo.race ? playerInfo.race[0].toUpperCase() : '?'}</Avatar>
-        }
+        { !isObs
+          && <Avatar className={classes[playerInfo.race || 0]}>{playerInfo.race ? playerInfo.race[0].toUpperCase() : '?'}</Avatar>}
       </div>
       <div className={classes.column}>
-        <Typography className={classes.heading} >{playerInfo.name}</Typography>
+        <Typography className={classes.heading}>{playerInfo.name}</Typography>
       </div>
       <div className={classes.column}>
-        <Typography variant="caption" gutterBottom align="center">{playerInfo.apm} APM</Typography>
+        <Typography variant="caption" gutterBottom align="center">
+          {playerInfo.apm}
+          {' '}
+APM
+        </Typography>
       </div>
 
     </ExpansionPanelSummary>

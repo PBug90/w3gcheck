@@ -1,4 +1,3 @@
-/* global describe it expect */
 import reducer from '../settings';
 import { LOAD_SETTINGS, SAVE_SETTINGS } from '../../actions/settings';
 

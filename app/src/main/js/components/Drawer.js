@@ -17,7 +17,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import { loadSettings } from '../actions/settings';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     height: 430,
     zIndex: 1,
@@ -42,17 +42,18 @@ class MainDrawer extends React.Component { //eslint-disable-line
   componentDidMount() {
     this.props.dispatch(loadSettings());
   }
+
   render() {
     const { classes, dispatch } = this.props;
     return (
       <Drawer
         variant="permanent"
         classes={{
-        paper: classes.drawerPaper,
-      }}
+          paper: classes.drawerPaper,
+        }}
         anchor="left"
       >
-        <Typography align="center" variant="headline" gutterBottom>
+        <Typography align="center" variant="h2" gutterBottom>
              W3GCheck
         </Typography>
         <Divider />
@@ -69,12 +70,6 @@ class MainDrawer extends React.Component { //eslint-disable-line
             </ListItemIcon>
             <ListItemText primary="Collection" />
           </ListItem>
-          <ListItem button onClick={() => dispatch(push('/w3gstream'))}>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="W3G Stream" />
-          </ListItem>
           <ListItem button onClick={() => dispatch(push('/settings'))}>
             <ListItemIcon>
               <SettingsIcon />
@@ -83,7 +78,8 @@ class MainDrawer extends React.Component { //eslint-disable-line
           </ListItem>
         </List>
         <List />
-      </Drawer>);
+      </Drawer>
+    );
   }
 }
 
@@ -92,7 +88,7 @@ MainDrawer.propTypes = {
   classes: PropTypes.object,
 };
 
-const mapDispatchToProps = dispatch => (
+const mapDispatchToProps = (dispatch) => (
   {
     dispatch,
   }

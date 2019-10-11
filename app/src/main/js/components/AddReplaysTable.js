@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import ParsedFileTableRow from './ParsedFileTableRow';
 
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
@@ -40,15 +40,16 @@ class AddReplaysTable extends React.Component { //eslint-disable-line
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody >
-            {files.map((f, index) =>
-              (<ParsedFileTableRow
+          <TableBody>
+            {files.map((f, index) => (
+              <ParsedFileTableRow
                 key={f.path}
                 dispatch={dispatch}
                 fileInfo={f}
                 replay={parsed[f.md5]}
                 index={index}
-              />))}
+              />
+            ))}
           </TableBody>
         </Table>
       </div>
@@ -56,7 +57,7 @@ class AddReplaysTable extends React.Component { //eslint-disable-line
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   dispatch,
 });
 

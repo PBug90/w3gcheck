@@ -13,18 +13,18 @@ import lastReplay from './lastReplay';
 import w3gstream from './w3gstream';
 
 const rootReducer = (history) => combineReducers({
-    fileList,
-    form: formReducer,
-    selected,
-    parsed,
-    parsestatus,
-    replays,
-    pagination,
-    settings,
-    fileWatchers,
-    lastReplay,
-    w3gstream,
-    router: connectRouter(history),
-  });
+  fileList,
+  form: formReducer,
+  selected,
+  parsed,
+  parsestatus,
+  replays,
+  pagination,
+  settings,
+  fileWatchers,
+  lastReplay,
+  w3gstream,
+  router: connectRouter(history),
+});
 
 export default rootReducer;

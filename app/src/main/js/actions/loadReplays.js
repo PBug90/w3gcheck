@@ -1,4 +1,4 @@
-import db from '../database';
+import { getReplays, getReplayCount } from '../database';
 
 export const LOAD_REPLAYS_PENDING = 'LOAD_REPLAYS_PENDING';
 export const LOAD_REPLAYS_DONE = 'LOAD_REPLAYS_DONE';
@@ -7,9 +7,9 @@ export const LOAD_REPLAYS_ERROR = 'LOAD_REPLAYS_ERROR';
 export function loadReplays(page = 0, perPage = 10, filter = {}) {
   return (dispatch) => {
     dispatch({ type: LOAD_REPLAYS_PENDING, payload: { page, perPage } });
-    return db.getReplays(page, perPage, filter)
+    return getReplays(page, perPage, filter)
       .then((result) => {
-        db.getReplayCount().then((count) => dispatch({
+        getReplayCount().then((count) => dispatch({
           type: LOAD_REPLAYS_DONE,
           payload: {
             page,

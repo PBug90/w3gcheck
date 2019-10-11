@@ -1,5 +1,6 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
   "env": {
     "es6": true,
     "node": true,
@@ -11,14 +12,6 @@
     "jsx-a11y",
     "import"
   ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": true
-    },
-    "sourceType": "module",
-    "indent": ["error", 2]
-  },
   "rules": {
     "react/sort-comp": [1, {
       "order": [
@@ -28,6 +21,8 @@
         "render"
       ]
     }],
+    "react/destructuring-assignment": 0,
+    "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": [1, {
       "extensions": [".js", ".jsx"]
     }],

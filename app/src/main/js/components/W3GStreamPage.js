@@ -11,7 +11,7 @@ class W3GStreamPage extends React.Component { //eslint-disable-line
         {this.props.settings.lastReplayDirectory}
         <ul>
             History of LastReplay.w3g changes:
-          {Object.keys(this.props.w3gstream.history).map(hash => <li>{hash}</li>)}
+          {Object.keys(this.props.w3gstream.history).map((hash) => <li>{hash}</li>)}
         </ul>
       </Paper>
     );

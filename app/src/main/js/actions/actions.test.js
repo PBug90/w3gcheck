@@ -1,4 +1,3 @@
-/* global describe it expect jest */
 import md5 from 'md5';
 import configureMockStore from 'redux-mock-store';
 import parserPromise from 'AsyncReplayParser';
@@ -30,7 +29,7 @@ import {
   LOAD_SETTINGS,
 } from './settings';
 
-import database from '../database';
+import * as database from '../database';
 
 const fs = require('fs');
 
@@ -55,7 +54,7 @@ describe('loadReplays action test', () => {
 
     store.dispatch(loadReplays())
       .then(() => {
-        const actualActions = store.getActions().map(action => action.type);
+        const actualActions = store.getActions().map((action) => action.type);
         expect(actualActions).toEqual(expectedActions);
         done();
       });
@@ -73,7 +72,7 @@ describe('loadReplays action test', () => {
 
     store.dispatch(loadReplays())
       .then(() => {
-        const actualActions = store.getActions().map(action => action.type);
+        const actualActions = store.getActions().map((action) => action.type);
         expect(actualActions).toEqual(expectedActions);
         done();
       });
@@ -93,7 +92,7 @@ describe('selectReplay action test', () => {
 
     store.dispatch(selectReplay('somestring'));
 
-    const actualActions = store.getActions().map(action => action.type);
+    const actualActions = store.getActions().map((action) => action.type);
     expect(actualActions).toEqual(expectedActions);
   });
 });
@@ -110,7 +109,7 @@ describe('parseFiles action test', () => {
 
     store.dispatch(parseFiles(['somepath']));
 
-    const actualActions = store.getActions().map(action => action.type);
+    const actualActions = store.getActions().map((action) => action.type);
     expect(actualActions).toEqual(expectedActions);
   });
 
@@ -144,7 +143,7 @@ describe('parseFiles action test', () => {
     md5.mockReturnValue('thisisamd5hash');
     store.dispatch(parseFiles(['somepath']));
 
-    const actualActions = store.getActions().map(action => action.type);
+    const actualActions = store.getActions().map((action) => action.type);
     expect(actualActions).toEqual(expectedActions);
   });
 
@@ -166,7 +165,7 @@ describe('parseFiles action test', () => {
     md5.mockReturnValue('thisisamd5hash');
     store.dispatch(parseFiles(['somepath', 'somepath2']))
       .then(() => {
-        const actualActions = store.getActions().map(action => action.type);
+        const actualActions = store.getActions().map((action) => action.type);
         expect(actualActions).toEqual(expectedActions);
         done();
       });
@@ -196,7 +195,7 @@ describe('parseFiles action test', () => {
 
     store.dispatch(parseFiles(['somepath', 'somepath2']))
       .then(() => {
-        const actualActions = store.getActions().map(action => action.type);
+        const actualActions = store.getActions().map((action) => action.type);
         expect(actualActions).toEqual(expectedActions);
         done();
       });
@@ -215,7 +214,7 @@ describe('parseFiles action test', () => {
 
     store.dispatch(parseFiles(['somepath']))
       .then(() => {
-        const actualActions = store.getActions().map(action => action.type);
+        const actualActions = store.getActions().map((action) => action.type);
         expect(actualActions).toEqual(expectedActions);
         done();
       });

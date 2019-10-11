@@ -14,7 +14,7 @@ import ReplayCollectionPage from './containers/ReplayCollectionPage';
 import AddReplaysPage from './containers/AddReplaysPage';
 import FileWatcher from './components/FileWatcher';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     zIndex: 1,
     overflow: 'hidden',
@@ -49,7 +49,8 @@ const App = (props) => {
         <Route exact path="/settings" component={SettingsPage} />
         <Route exact path="/w3gstream" component={W3GStreamPage} />
       </main>
-    </div>);
+    </div>
+  );
 };
 
 App.propTypes = {

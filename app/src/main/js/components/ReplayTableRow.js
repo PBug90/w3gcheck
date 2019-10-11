@@ -13,12 +13,13 @@ import { convertTime } from '../utility/replay';
 const ReplayTableRow = (props) => {
   const { replay } = props;
   const players = Object.values(replay.players).map(
-    player =>
-      (<RaceColoredPlayerName
+    (player) => (
+      <RaceColoredPlayerName
         key={player.id}
         name={player.name}
         race={player.detectedRace || player.race || 0}
-      />),
+      />
+    ),
   );
   return (
     <TableRow>
@@ -50,7 +51,7 @@ ReplayTableRow.propTypes = {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}), dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(ReplayTableRow);

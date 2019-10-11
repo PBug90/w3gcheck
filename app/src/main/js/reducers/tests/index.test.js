@@ -1,4 +1,3 @@
-/* global describe it expect */
 import { createStore } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import reducer from '../index';

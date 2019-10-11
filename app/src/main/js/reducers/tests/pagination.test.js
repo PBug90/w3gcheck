@@ -1,4 +1,3 @@
-/* global describe it expect */
 import reducer from '../pagination';
 import { LOAD_REPLAYS_DONE } from '../../actions/loadReplays';
 

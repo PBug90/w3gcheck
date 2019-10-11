@@ -39,7 +39,7 @@ class CenteredTabs extends React.Component {
 
   render() {
     const { classes, labels, tabContents } = this.props;
-    const labelItems = labels.map(label => <Tab label={label}>{label}</Tab>);
+    const labelItems = labels.map((label) => <Tab label={label}>{label}</Tab>);
     const activeTab = <TabContainer>{tabContents[this.state.value]}</TabContainer> || <div />;
     return (
       <Paper className={classes.root}>

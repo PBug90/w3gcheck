@@ -1,6 +1,3 @@
-/* global describe it expect */
-
-
 import reducer from '../selectReplay'; //eslint-disable-line
 import { SELECT_REPLAY } from '../../actions/replaylist'; //eslint-disable-line
 
