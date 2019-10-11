@@ -5,24 +5,40 @@ PouchDB.plugin(find);
 
 const db = new PouchDB('./replays');
 
+const createIndexes = () => db.createIndex({
+  index: {
+    fields: ['insertDate'],
+    name: 'myindex',
+  },
+})
+  .then(() => db.createIndex({
+    index: {
+      fields: ['md5'],
+      name: 'md5index',
+    },
+  }))
+  .then(() => db.createIndex({
+    index: {
+      fields: ['matchup'],
+      name: 'matchupindex',
+    },
+  }));
+
 
 export const getReplays = (page, perPage, filter = {}) => {
   const filterMerged = {
-    ...filter,
+    $and: [
+      { insertDate: { $gt: null } },
+      filter,
+    ],
   };
-  return db.createIndex({
-    index: {
-      fields: ['insertDate', 'md5', 'matchup', 'meta.mapName', 'meta.mapNameCleaned'],
-      name: 'myindex',
-    },
+  return createIndexes().then(() => db.find({
+    selector: filterMerged, limit: perPage, skip: page * perPage, sort: [{ insertDate: 'desc' }],
   })
-    .then(() => db.find({
-      selector: filterMerged, limit: perPage, skip: page * perPage,
-    })
-      .then((r) => r.docs.map((d) => {
-        delete d._rev;
-        return d;
-      })));
+    .then((r) => r.docs.map((d) => {
+      delete d._rev;
+      return d;
+    })));
 };
 
 /* istanbul ignore next */

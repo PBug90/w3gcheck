@@ -94,7 +94,7 @@ describe('Database tests', () => {
     });
 
     it('can filter with specific properties', (done) => {
-      getReplays(0, 10, { matchup: 'HvO' }).then((r) => {
+      getReplays(0, 10, { matchup: { $eq: 'HvO' } }).then((r) => {
         expect(r).toEqual(
           [
             {

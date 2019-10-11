@@ -5,13 +5,12 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
 import { AppContainer } from 'react-hot-loader';
 import thunk from 'redux-thunk';
-import createHistory from 'history/createHashHistory';
+import { createHashHistory as createHistory } from 'history';
 import reducers from './reducers/index';
 import App from './app';
 
 
 const history = createHistory();
-
 /*
 Here we are getting the initial state injected by the server. See routes/index.js for more details
  */
