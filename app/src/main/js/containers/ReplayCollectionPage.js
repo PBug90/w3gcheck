@@ -10,7 +10,7 @@ import * as replayListActions from '../actions/replaylist';
 import * as loadReplaysActions from '../actions/loadReplays';
 
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
@@ -23,17 +23,16 @@ const styles = theme => ({
   },
 });
 
-const ReplayCollectionPage = props =>
-  (
-    <Paper >
-      <Toolbar>
-        <Typography variant="title" id="tableTitle">
+const ReplayCollectionPage = (props) => (
+  <Paper>
+    <Toolbar>
+      <Typography variant="title" id="tableTitle">
             Your replay collection
-        </Typography>
-      </Toolbar>
-      <ReplayTable {...props} />
-    </Paper>
-  );
+      </Typography>
+    </Toolbar>
+    <ReplayTable {...props} />
+  </Paper>
+);
 
 
 function mapStateToProps(state) {
@@ -46,7 +45,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, replayListActions, loadReplaysActions), dispatch);
+  return bindActionCreators({ ...replayListActions, ...loadReplaysActions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(

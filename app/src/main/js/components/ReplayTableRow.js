@@ -13,12 +13,13 @@ import { convertTime } from '../utility/replay';
 const ReplayTableRow = (props) => {
   const { replay } = props;
   const players = Object.values(replay.players).map(
-    player =>
-      (<RaceColoredPlayerName
+    (player) => (
+      <RaceColoredPlayerName
         key={player.id}
         name={player.name}
         race={player.detectedRace || player.race || 0}
-      />),
+      />
+    ),
   );
   return (
     <TableRow>
@@ -31,10 +32,10 @@ const ReplayTableRow = (props) => {
         {replay.matchup}
       </TableCell>
       <TableCell>
-        {replay.meta.mapNameCleaned}
+        {replay.map.cleaned}
       </TableCell>
       <TableCell>
-        {convertTime(replay.header.replayLengthMS)}
+        {convertTime(replay.duration)}
       </TableCell>
       <TableCell>
         <Button onClick={() => props.selectReplay(replay.md5)}>
@@ -50,7 +51,7 @@ ReplayTableRow.propTypes = {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}), dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(ReplayTableRow);

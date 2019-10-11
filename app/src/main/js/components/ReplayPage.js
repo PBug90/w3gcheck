@@ -12,7 +12,7 @@ import ActionChart from './ReplayPage/ActionChart';
 import APMChart from './ReplayPage/APMChart';
 import ReplayTabs from './ReplayPage/ReplayTabs';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
@@ -43,29 +43,19 @@ class Replay extends React.Component {
     if (!replay) {
       return (<Redirect to="/" />);
     }
-    const { players } = replay;
-    const teams = Object.keys(replay.teams).map(
-      (key) => {
-        const playerItems =
-        Object.values(replay.teams[key]).map(
-          playerId => (<Player
-            isObs={false}
-            playerInfo={players[playerId]}
-          />),
-        );
-        return <Team>{playerItems}</Team>;
-      },
+    const teams = replay.players.map(
+      (player) => <Team><Player isObs={false} playerInfo={player} /></Team>,
     );
     const actionChart = <ActionChart players={replay.players} />;
     const apmChart = <APMChart players={replay.players} />;
     return (
       <Grid container="container" justify="space-between">
-        <Grid item="item" xs={6} >
+        <Grid item="item" xs={6}>
           {teams}
         </Grid>
         <Grid item="item" xs={4}>
           <ReplayMeta
-            meta={Object.assign({}, replay.meta, replay.header)}
+            meta={({ ...replay.meta, ...replay.header })}
             observers={replay.observers}
             filepath={replay.filepath}
             matchup={replay.matchup}
@@ -77,7 +67,8 @@ class Replay extends React.Component {
             tabContents={[actionChart, apmChart]}
           />
         </Grid>
-      </Grid>);
+      </Grid>
+    );
   }
 }
 

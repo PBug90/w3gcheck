@@ -1,4 +1,3 @@
-/* global describe it expect jest */
 import reducer from '../fileList';
 import { UPDATE_FILE_LIST } from '../../actions/replaylist';
 import {

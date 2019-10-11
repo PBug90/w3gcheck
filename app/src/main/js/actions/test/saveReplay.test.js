@@ -1,7 +1,6 @@
-/* global describe it expect jest */
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import database from '../../database';
+import { insertReplay } from '../../database';
 
 import {
   SAVE_REPLAY_ASYNC_DONE,
@@ -28,7 +27,7 @@ describe('saveReplay action test', () => {
         payload: { inserted: { md5: 'somemd5', filepath: '/some/path/' }, fileIndex: 0 },
       },
     ];
-    database.insertReplay.mockResolvedValue({ md5: 'somemd5', filepath: '/some/path/' });
+    insertReplay.mockResolvedValue({ md5: 'somemd5', filepath: '/some/path/' });
     store.dispatch(saveReplay({ md5: 'somemd5', filepath: '/some/path/' }, 0))
       .then(() => {
         const actualActions = store.getActions();
@@ -49,7 +48,7 @@ describe('saveReplay action test', () => {
         payload: { err: new Error('A database error occured!'), fileIndex: 0 },
       },
     ];
-    database.insertReplay.mockRejectedValue(new Error('A database error occured!'));
+    insertReplay.mockRejectedValue(new Error('A database error occured!'));
     store.dispatch(saveReplay({ md5: 'somemd5', filepath: '/some/path/' }, 0))
       .then(() => {
         const actualActions = store.getActions();
@@ -60,11 +59,10 @@ describe('saveReplay action test', () => {
 
   it('dispatches SAVE_REPLAY_ASYNC_ERROR if replay has no md5 property', () => {
     const store = mockStore({});
-    const expectedAction =
-      {
-        type: SAVE_REPLAY_ASYNC_ERROR,
-        payload: new Error('No md5 property!'),
-      };
+    const expectedAction = {
+      type: SAVE_REPLAY_ASYNC_ERROR,
+      payload: new Error('No md5 property!'),
+    };
 
     store.dispatch(saveReplay({ filepath: '/some/path/' }, 0));
 
@@ -74,11 +72,10 @@ describe('saveReplay action test', () => {
 
   it('dispatches SAVE_REPLAY_ASYNC_ERROR if replay has no filepath property', () => {
     const store = mockStore({});
-    const expectedAction =
-      {
-        type: SAVE_REPLAY_ASYNC_ERROR,
-        payload: new Error('No filepath property!'),
-      };
+    const expectedAction = {
+      type: SAVE_REPLAY_ASYNC_ERROR,
+      payload: new Error('No filepath property!'),
+    };
 
     store.dispatch(saveReplay({ md5: 'somemd5' }, 0));
     const actualActions = store.getActions();

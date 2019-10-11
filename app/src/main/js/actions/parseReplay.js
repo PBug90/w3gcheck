@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import fs from 'fs';
 import parserPromise from 'AsyncReplayParser';
-import db from '../database';
+import { getReplay } from '../database';
 
 
 export const PARSE_REPLAY_ASYNC_DONE = 'PARSE_REPLAY_ASYNC_DONE';
@@ -12,19 +12,19 @@ export const PARSE_LAST_REPLAY_ASYNC_DONE = 'PARSE_LAST_REPLAY_ASYNC_DONE';
 export const PARSE_LAST_REPLAY_ASYNC_PENDING = 'PARSE_LAST_REPLAY_ASYNC_PENDING';
 export const PARSE_LAST_REPLAY_ASYNC_ERROR = 'PARSE_LAST_REPLAY_ASYNC_ERROR';
 
-const cleanMapName = mapPath => mapPath.split('\\').pop();
+const cleanMapName = (mapPath) => mapPath.split('\\').pop();
 
-const replayParserPromise = filepath => new Promise((resolve, reject) => {
+const replayParserPromise = (filepath) => new Promise((resolve, reject) => {
   fs.readFile(filepath, (err, buf) => {
     if (err) {
       reject(err);
     }
     const hash = md5(buf);
-    resolve(db.getReplay(hash)
-      .then(replay => ({ ...replay, fromDB: true }))
+    resolve(getReplay(hash)
+      .then((replay) => ({ ...replay, fromDB: true }))
       .catch(() => parserPromise(filepath).then((replayParsed) => {
         replayParsed.md5 = hash;
-        replayParsed.meta.mapNameCleaned = cleanMapName(replayParsed.meta.mapName);
+        replayParsed.map.cleaned = cleanMapName(replayParsed.map.file);
         replayParsed.insertDate = new Date();
         replayParsed.filepath = filepath;
         replayParsed.fromDB = false;
@@ -38,7 +38,7 @@ export function parseReplay(item, index) {
   return (dispatch) => {
     dispatch({ type: PARSE_REPLAY_ASYNC_PENDING, payload: index });
     return replayParserPromise(item.path)
-      .then(replay => dispatch({
+      .then((replay) => dispatch({
         type: PARSE_REPLAY_ASYNC_DONE,
         payload: {
           index, replay, md5: replay.md5, filepath: item, fromDB: replay.fromDB,
@@ -55,7 +55,7 @@ export function parseLastReplay(filepath, hash) {
   return (dispatch) => {
     dispatch({ type: PARSE_LAST_REPLAY_ASYNC_PENDING, payload: { filepath, hash } });
     return replayParserPromise(filepath)
-      .then(replay => dispatch({
+      .then((replay) => dispatch({
         type: PARSE_LAST_REPLAY_ASYNC_DONE,
         payload: {
           replay, md5: replay.md5, filepath,

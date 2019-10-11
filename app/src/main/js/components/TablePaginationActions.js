@@ -7,7 +7,7 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
-const actionsStyles = theme => ({
+const actionsStyles = (theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
@@ -23,6 +23,7 @@ class TablePaginationActions extends React.Component {
     this.handleNextButtonClick = this.handleNextButtonClick.bind(this);
     this.handleLastPageButtonClick = this.handleLastPageButtonClick.bind(this);
   }
+
   handleFirstPageButtonClick(event) {
     this.props.onChangePage(event, 0);
   }

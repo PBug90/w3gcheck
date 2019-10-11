@@ -18,23 +18,30 @@ class AddReplaysPage extends React.Component {
   }
 
   showDialog() {
-    const result = dialog.showOpenDialog({ properties: ['multiSelections', 'openFile'] });
-    if (result) { this.props.dispatch(parseFiles(result)); }
+    dialog.showOpenDialog({ properties: ['multiSelections', 'openFile'] })
+      .then((result) => {
+        if (result.canceled === false) { this.props.dispatch(parseFiles(result.filePaths)); }
+      });
   }
 
   render() {
     const { parsed, fileList, parsestatus } = this.props;
     return (
-      <Paper >
+      <Paper>
         <Toolbar>
           <Grid container>
             <Grid item xs={4}>
               <Button variant="outlined" onClick={this.showDialog}>Parse Replays</Button>
             </Grid>
             <Grid item xs={4}>
-              {parsestatus.errors > 0 &&
-              <Typography color="error">{parsestatus.errors} parse error(s)</Typography>
-          }
+              {parsestatus.errors > 0
+              && (
+              <Typography color="error">
+                {parsestatus.errors}
+                {' '}
+parse error(s)
+              </Typography>
+              )}
             </Grid>
           </Grid>
         </Toolbar>

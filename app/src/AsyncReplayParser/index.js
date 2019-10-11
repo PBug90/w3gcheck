@@ -6,7 +6,7 @@ const currentWork = [];
 let current = -1;
 
 
-const doWork = filepath => new Promise((resolve, reject) => {
+const doWork = (filepath) => new Promise((resolve, reject) => {
   current += 1;
   currentWork[current] = { resolve, reject };
   console.log({ current, filepath }); // eslint-disable-line

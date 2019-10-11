@@ -11,7 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import ReplayTableRow from './ReplayTableRow';
 import TablePaginationActions from './TablePaginationActions';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
@@ -63,12 +63,13 @@ class ReplayTable extends React.Component { //eslint-disable-line
             </TableRow>
           </TableHead>
           <TableBody>
-            {replayList.map(r =>
-              (<ReplayTableRow
+            {replayList.map((r) => (
+              <ReplayTableRow
                 key={replays[r].md5}
                 replay={replays[r]}
                 selectReplay={selectReplay}
-              />)) }
+              />
+            )) }
           </TableBody>
           <TableFooter>
             <TableRow>

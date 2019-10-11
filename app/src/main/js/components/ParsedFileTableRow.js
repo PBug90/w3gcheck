@@ -16,27 +16,27 @@ const ParsedFileTableRow = (props) => {
   let players = null;
   if (replay) {
     players = Object.values(replay.players).map(
-      player =>
-        (<RaceColoredPlayerName
+      (player) => (
+        <RaceColoredPlayerName
           name={player.name}
           race={player.detectedRace || player.race || 0}
-        />),
+        />
+      ),
     );
   }
   return (
     <TableRow>
       <TableCell>
-        <Typography variant="body2" gutterBottom >
+        <Typography variant="body2" gutterBottom>
           {players}
         </Typography>
       </TableCell>
-      <TableCell >
+      <TableCell>
         {!fileInfo.md5 && fileInfo.path}
         {fileInfo.md5 && replay.matchup}
       </TableCell>
       <TableCell>
-
-        {replay && replay.meta.mapNameCleaned}
+        {replay && replay.map.cleaned}
       </TableCell>
       <TableCell>
 
@@ -47,11 +47,12 @@ const ParsedFileTableRow = (props) => {
           Add to Collection
         </Button>
 
-        {replay &&
+        {replay
+        && (
         <Button onClick={() => dispatch(selectReplay(fileInfo.md5))}>
           View details
         </Button>
-        }
+        )}
 
       </TableCell>
     </TableRow>

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
 import { reducer as formReducer } from 'redux-form';
 import fileList from './fileList';
 import selected from './selectReplay';
@@ -12,7 +12,7 @@ import fileWatchers from './fileWatcher';
 import lastReplay from './lastReplay';
 import w3gstream from './w3gstream';
 
-const rootReducer = combineReducers({
+const rootReducer = (history) => combineReducers({
   fileList,
   form: formReducer,
   selected,
@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
   fileWatchers,
   lastReplay,
   w3gstream,
-  router: routerReducer,
+  router: connectRouter(history),
 });
 
 export default rootReducer;

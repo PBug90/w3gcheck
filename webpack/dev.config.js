@@ -56,7 +56,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           query: {
-            presets: ['react'],
+            presets: ['@babel/preset-react'],
           },
 
         },

@@ -1,4 +1,3 @@
-/* global describe it expect */
 import reducer from '../parsestatus';
 import {
   PARSE_REPLAY_ASYNC_DONE,

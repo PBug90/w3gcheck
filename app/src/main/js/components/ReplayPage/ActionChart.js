@@ -1,4 +1,6 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer }
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+}
   from 'recharts';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -14,7 +16,7 @@ const ActionChart = ({ players }) => {
     });
     bars.push(<Bar dataKey={p.name} fill={p.color} />);
   });
-  actionData = Object.keys(actionData).map(key => ({ name: key, ...actionData[key] }));
+  actionData = Object.keys(actionData).map((key) => ({ name: key, ...actionData[key] }));
 
   return (
     <ResponsiveContainer width="100%" height={400}>

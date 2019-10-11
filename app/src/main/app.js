@@ -12,7 +12,12 @@ let mainWindow;
 let parserWindow;
 // Create a hidden background window
 function createBgWindow() {
-  parserWindow = new BrowserWindow({ show: true });
+  parserWindow = new BrowserWindow({
+    show: true,
+    webPreferences: {
+      nodeIntegration: true, // add this
+    },
+  });
   parserWindow.loadURL(`file://${__dirname}/ReplayParser.html`);
   parserWindow.on('closed', () => {
     console.log('Background window closed'); // eslint-disable-line
@@ -22,7 +27,13 @@ function createBgWindow() {
 /** This function will create the mainWindow */
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 1366, height: 768 });
+  mainWindow = new BrowserWindow({
+    width: 1366,
+    height: 768,
+    webPreferences: {
+      nodeIntegration: true, // add this
+    },
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({

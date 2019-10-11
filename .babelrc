@@ -1,22 +1,22 @@
 {
   "presets": [
-    "react",
-    "env"
+    "@babel/preset-react",
+    "@babel/preset-env"
   ],
   "env": {
     "production": {
       "presets": ["react-optimize"],
       "plugins": [
-        "transform-class-properties",
-        "transform-es2015-classes",
-        "transform-object-rest-spread"
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-classes",
+        "@babel/plugin-proposal-object-rest-spread"
       ]      
     },
     "development": {
       "plugins": [
-        "transform-class-properties",
-        "transform-es2015-classes",
-        "transform-object-rest-spread"
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-classes",
+        "@babel/plugin-proposal-object-rest-spread"
       ]
     }
   }
