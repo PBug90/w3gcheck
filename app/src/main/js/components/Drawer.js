@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import InboxIcon from '@material-ui/icons/Inbox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
