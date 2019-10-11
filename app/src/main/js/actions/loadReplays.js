@@ -9,7 +9,7 @@ export function loadReplays(page = 0, perPage = 10, filter = {}) {
     dispatch({ type: LOAD_REPLAYS_PENDING, payload: { page, perPage } });
     return db.getReplays(page, perPage, filter)
       .then((result) => {
-        db.getReplayCount().then(count => dispatch({
+        db.getReplayCount().then((count) => dispatch({
           type: LOAD_REPLAYS_DONE,
           payload: {
             page,
@@ -21,6 +21,6 @@ export function loadReplays(page = 0, perPage = 10, filter = {}) {
           },
         }));
       })
-      .catch(err => dispatch({ type: LOAD_REPLAYS_ERROR, payload: err.message }));
+      .catch((err) => dispatch({ type: LOAD_REPLAYS_ERROR, payload: err.message }));
   };
 }

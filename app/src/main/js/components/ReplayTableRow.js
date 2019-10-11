@@ -31,10 +31,10 @@ const ReplayTableRow = (props) => {
         {replay.matchup}
       </TableCell>
       <TableCell>
-        {replay.meta.mapNameCleaned}
+        {replay.map.cleaned}
       </TableCell>
       <TableCell>
-        {convertTime(replay.header.replayLengthMS)}
+        {convertTime(replay.duration)}
       </TableCell>
       <TableCell>
         <Button onClick={() => props.selectReplay(replay.md5)}>

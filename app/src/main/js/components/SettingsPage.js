@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { TextField } from 'redux-form-material-ui';
+import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { connect } from 'react-redux';
+import { connect, compose } from 'react-redux';
 import { saveSettings } from '../actions/settings';
 
 
@@ -31,6 +31,22 @@ const styles = theme => ({
 });
 const { dialog } = require('electron').remote;
 
+const renderTextField = ({
+  label,
+  input,
+  meta: { touched, invalid, error },
+  ...custom
+}) => (
+  <TextField
+    label={label}
+    placeholder={label}
+    error={touched && invalid}
+    helperText={touched && error}
+    {...input}
+    {...custom}
+  />
+)
+
 class SettingsPage extends React.Component { //eslint-disable-line
   constructor(props) {
     super(props);
@@ -39,8 +55,12 @@ class SettingsPage extends React.Component { //eslint-disable-line
   }
 
   showDialog(formValue, dialogOptions = []) {
-    const result = dialog.showOpenDialog({ properties: dialogOptions });
-    if (result) { this.props.change(formValue, result[0]); }
+    dialog.showOpenDialog({ properties: dialogOptions })
+    .then((val) => {
+      if (val.canceled === false){
+        this.props.change(formValue, val.filePaths[0]);
+      }
+    });    
   }
 
   onSubmit(newSettings) {
@@ -59,7 +79,7 @@ class SettingsPage extends React.Component { //eslint-disable-line
                 <FormGroup>
                   <Field
                     name="wc3FilePath"
-                    component={TextField}
+                    component={renderTextField}
                     InputProps={{
                     readOnly: true,
                   }}
@@ -80,7 +100,7 @@ class SettingsPage extends React.Component { //eslint-disable-line
                 <FormGroup>
                   <Field
                     name="lastReplayDirectory"
-                    component={TextField}
+                    component={renderTextField}
                     InputProps={{
                     readOnly: true,
                   }}
