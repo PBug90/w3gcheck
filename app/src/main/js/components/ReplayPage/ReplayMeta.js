@@ -21,7 +21,7 @@ const styles = (theme) => ({
 
 
 const ReplayMeta = ({
-  classes, meta, observers = [], filepath, matchup,
+  classes, observers = [], filepath, matchup, map, creator, gamename, duration, speed, version
 }) => (
   <Paper className={classes.root}>
     <Table>
@@ -29,34 +29,29 @@ const ReplayMeta = ({
         <TableRow>
           <TableCell>Version</TableCell>
           <TableCell>
-1.
-            {meta.version}
+            {version}
           </TableCell>
         </TableRow>
         <TableRow>
           <TableCell scope="row">Map</TableCell>
-          <TableCell>{meta.mapName}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell scope="row">Map Checksum</TableCell>
-          <TableCell>{meta.mapChecksum}</TableCell>
+          <TableCell>{map}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell scope="row">Creator</TableCell>
-          <TableCell>{meta.creator}</TableCell>
+          <TableCell>{creator}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell scope="row">Game name</TableCell>
-          <TableCell>{meta.gameName}</TableCell>
+          <TableCell>{gamename}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell scope="row">Speed</TableCell>
-          <TableCell>{meta.speed}</TableCell>
+          <TableCell>{speed}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell scope="row">Duration</TableCell>
           <TableCell>
-            {convertTime(meta.replayLengthMS)}
+            {convertTime(duration)}
             {' '}
 min
           </TableCell>

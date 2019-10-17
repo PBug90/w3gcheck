@@ -55,10 +55,15 @@ class Replay extends React.Component {
         </Grid>
         <Grid item="item" xs={4}>
           <ReplayMeta
-            meta={({ ...replay.meta, ...replay.header })}
+            gamename={replay.gamename}
+            duration={replay.duration}
+            speed={replay.settings.speed}
             observers={replay.observers}
             filepath={replay.filepath}
             matchup={replay.matchup}
+            version={replay.version}
+            map={replay.map.cleaned}
+            creator={replay.creator}
           />
         </Grid>
         <Grid item="item" xs={12} className={classes.tabs}>
@@ -66,8 +71,8 @@ class Replay extends React.Component {
             labels={['Absolute Actions', 'APM']}
             tabContents={[actionChart, apmChart]}
           />
-        </Grid>
-      </Grid>
+        </Grid>  
+      </Grid> 
     );
   }
 }
